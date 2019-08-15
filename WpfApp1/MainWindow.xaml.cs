@@ -20,6 +20,7 @@ using System.Windows.Threading;
 using System.Windows.Controls.Primitives;
 using System.Globalization;
 using System.Windows.Media.Animation;
+using System.Diagnostics;
 
 namespace WpfApp1
 {
@@ -32,6 +33,7 @@ namespace WpfApp1
         DispatcherTimer timerDisplay;
         DispatcherTimer mouseLeftDownTimer;
         DispatcherTimer mouseStopTimer;
+        DispatcherTimer imageTimer;
         string mediaFile;
         bool isDragging = false;
         int secsPlayed = 0;
@@ -59,7 +61,30 @@ namespace WpfApp1
             mouseStopTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(5) };
             mouseStopTimer.Tick += new EventHandler(MouseStopTick);
 
+            imageTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(10) };
+            imageTimer.Tick += new EventHandler(TakeMediaImageTick);
+        }
 
+
+        private void TakeMediaImageTick(object sender, EventArgs e)
+        {
+            Size dpi = new Size(96, 96);
+
+            RenderTargetBitmap bmp =
+                new RenderTargetBitmap((int)MediaPlayer.Width, (int)MediaPlayer.Height,
+                    dpi.Width, dpi.Height, PixelFormats.Pbgra32);
+            bmp.Render(mediaDisplay);
+
+            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(bmp));
+
+            string previousFilename = Guid.NewGuid().ToString() + ".jpg";
+            FileStream fs = new FileStream(previousFilename, FileMode.Create);
+            encoder.Save(fs);
+            fs.Close();
+
+            MessageBox.Show("image taken");
+            Process.Start(previousFilename);
         }
 
         private void MouseStopTick(object sender, EventArgs e)
@@ -137,7 +162,7 @@ namespace WpfApp1
                  */
 
             timer.Start();
-
+            imageTimer.Start();
             timerDisplay.Start();
 
         }
