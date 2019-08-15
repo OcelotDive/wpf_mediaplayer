@@ -39,8 +39,9 @@ namespace WpfApp1
         int secsPlayed = 0;
         bool mediaLoop = false;
         TimeSpan ts;
+        string previousFilename;
 
-
+        
 
         public MainWindow()
         {
@@ -66,25 +67,44 @@ namespace WpfApp1
         }
 
 
+      
+
         private void TakeMediaImageTick(object sender, EventArgs e)
         {
             Size dpi = new Size(96, 96);
 
             RenderTargetBitmap bmp =
-                new RenderTargetBitmap((int)MediaPlayer.Width, (int)MediaPlayer.Height,
+                new RenderTargetBitmap((int)window.Width, (int)window.Height - 120,
                     dpi.Width, dpi.Height, PixelFormats.Pbgra32);
             bmp.Render(mediaDisplay);
 
             JpegBitmapEncoder encoder = new JpegBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(bmp));
 
-            string previousFilename = Guid.NewGuid().ToString() + ".jpg";
-            FileStream fs = new FileStream(previousFilename, FileMode.Create);
+
+            var directorypath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Screendumps");
+
+            var directory = new DirectoryInfo(directorypath);
+
+            if (!directory.Exists)
+            {
+                directory.Create();
+            }
+
+
+            previousFilename = Guid.NewGuid().ToString() + ".jpg";
+            FileStream fs = new FileStream(System.IO.Path.Combine(directorypath,previousFilename), FileMode.Create);
+            
+            
             encoder.Save(fs);
+
+            string[] previousMedia =  Directory.GetFiles(@"C:\Users\david.jolliffe\Desktop\c#\mediaPlayer\WpfApp1\WpfApp1\Previous");
             fs.Close();
 
             MessageBox.Show("image taken");
-            Process.Start(previousFilename);
+            
+
+           
         }
 
         private void MouseStopTick(object sender, EventArgs e)
@@ -162,9 +182,9 @@ namespace WpfApp1
                  */
 
             timer.Start();
-            imageTimer.Start();
+            
             timerDisplay.Start();
-
+            imageTimer.Start();
         }
 
         private static TimeSpan GetMediaDuration(string mediaFile)
