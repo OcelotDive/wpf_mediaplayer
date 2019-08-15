@@ -40,7 +40,8 @@ namespace WpfApp1
         bool mediaLoop = false;
         TimeSpan ts;
         string previousFilename;
-
+        string previousFilePath;
+        
         
 
         public MainWindow()
@@ -64,10 +65,32 @@ namespace WpfApp1
 
             imageTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(10) };
             imageTimer.Tick += new EventHandler(TakeMediaImageTick);
+
+            CreateDir();
+            GetPreviousImageCount(previousFilePath);
+           
         }
 
 
-      
+      private void CreateDir()
+        {
+            var directorypath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Screendumps");
+            previousFilePath = directorypath.ToString();
+            var directory = new DirectoryInfo(directorypath);
+
+            if (!directory.Exists)
+            {
+                directory.Create();
+            }
+        }
+
+      private  int GetPreviousImageCount(string path)
+
+        {
+            int fileCount = Directory.GetFiles(path, "*").Length + 1;
+            MessageBox.Show(fileCount.ToString());
+            return fileCount;
+        }
 
         private void TakeMediaImageTick(object sender, EventArgs e)
         {
@@ -82,18 +105,11 @@ namespace WpfApp1
             encoder.Frames.Add(BitmapFrame.Create(bmp));
 
 
-            var directorypath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Screendumps");
-
-            var directory = new DirectoryInfo(directorypath);
-
-            if (!directory.Exists)
-            {
-                directory.Create();
-            }
+            
 
 
             previousFilename = Guid.NewGuid().ToString() + ".jpg";
-            FileStream fs = new FileStream(System.IO.Path.Combine(directorypath,previousFilename), FileMode.Create);
+            FileStream fs = new FileStream(System.IO.Path.Combine(previousFilePath,previousFilename), FileMode.Create);
             
             
             encoder.Save(fs);
@@ -101,7 +117,7 @@ namespace WpfApp1
             string[] previousMedia =  Directory.GetFiles(@"C:\Users\david.jolliffe\Desktop\c#\mediaPlayer\WpfApp1\WpfApp1\Previous");
             fs.Close();
 
-            MessageBox.Show("image taken");
+            
             
 
            
