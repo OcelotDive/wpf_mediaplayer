@@ -257,7 +257,7 @@
                     <Slider x:Name="TimeSlider" HorizontalAlignment="Stretch" Margin="44,0,10,51" Cursor="Hand"  Thumb.DragStarted="TimeSlider_DragStarted" Thumb.DragCompleted="TimeSlider_DragCompleted" SmallChange="1" BorderBrush="{x:Null}" Foreground="#FF21F32B" Grid.Row="1"/>
 
 
-                    <TextBlock x:Name="TimeDisplay" Padding="5" FontWeight="Bold" Margin="28,20,0,0" Width="62" Background="#FF1B1919" Height="46" VerticalAlignment="Top" Grid.Row="1" HorizontalAlignment="Left"><Run Background="#FFD4D4D4" Text="Test"/></TextBlock>
+                    <TextBlock x:Name="TimeDisplay" Padding="5" FontWeight="Bold" Margin="68,0,0,0" Width="110" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#FFFFF8F8" FontSize="14" FontStretch="Expanded"><Run Background="#FFD4D4D4" /></TextBlock>
                     <Button x:Name="PlayButton" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="50" Height="50" Padding="0" Background="Black" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="110,20,0,0"  Click="PlayButton_Click" RenderTransformOrigin="0.5,0.2" Grid.Row="1" Visibility="Collapsed">
                         <materialDesign:PackIcon Kind="Pause" Foreground="#FF3580BF" Width="25" Height="25"/>
                         <Button.ToolTip>
@@ -338,7 +338,7 @@
 
                 </Grid>
             </Grid>
-            <Slider x:Name="VolumeSlider" HorizontalAlignment="Right" Margin="795,0,15,91" VerticalAlignment="Bottom" Width="14" RenderTransformOrigin="0.6,1.222" Height="39" AutoToolTipPlacement="TopLeft" TickPlacement="Both" Opacity="0"/>
+            <Slider x:Name="VolumeSlider" HorizontalAlignment="Right" Margin="795,0,15,91" VerticalAlignment="Bottom" Width="14" RenderTransformOrigin="0.6,1.222" Height="39" AutoToolTipPlacement="TopLeft" TickPlacement="Both" Opacity="0" ValueChanged="VolumeSlider_ValueChanged"/>
 
         </Grid>
         <Grid x:Name="OpenMenu" Background="#FFFBFBFB"   Width="auto" RenderTransformOrigin="0.5,0.5">

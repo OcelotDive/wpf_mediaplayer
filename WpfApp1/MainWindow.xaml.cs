@@ -344,14 +344,15 @@ namespace WpfApp1
         {
             LoopButton.Visibility = Visibility.Collapsed;
             UnLoopButton.Visibility = Visibility.Visible;
-            mediaLoop = true;
+           
+            mediaLoop = false;
         }
 
         private void UnLoopButton_Click(object sender, RoutedEventArgs e)
         {
             LoopButton.Visibility = Visibility.Visible;
             UnLoopButton.Visibility = Visibility.Collapsed;
-            mediaLoop = false;
+            mediaLoop = true;
         }
 
         private void ShowVolumeButton_Click(object sender, RoutedEventArgs e)
@@ -365,7 +366,7 @@ namespace WpfApp1
             ShowVolumeButtonOff.Visibility = Visibility.Collapsed;
         }
 
-        private void VolueSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void VolumeSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             MediaPlayer.Volume = VolumeSlider.Value;
         }
@@ -376,5 +377,7 @@ namespace WpfApp1
             mouseStopTimer.Start();
             
         }
+
+      
     }
 }
