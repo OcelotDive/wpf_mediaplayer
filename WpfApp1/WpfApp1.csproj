@@ -117,6 +117,7 @@
     <Resource Include="Assets\landscape.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\Blank.PNG" />
     <Content Include="Assets\router1.avi" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

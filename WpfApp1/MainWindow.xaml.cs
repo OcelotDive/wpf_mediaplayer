@@ -41,7 +41,7 @@ namespace WpfApp1
         TimeSpan ts;
         string previousFilename;
         string previousFilePath;
-        
+        List<string> previousMediaPlays = new List<string>();
         
 
         public MainWindow()
@@ -67,13 +67,43 @@ namespace WpfApp1
             imageTimer.Tick += new EventHandler(TakeMediaImageTick);
 
             CreateDir();
-            GetPreviousImageCount(previousFilePath);
-           
+            AddImages(previousFilePath);
         }
 
 
-      private void CreateDir()
+        private void AddImages(string path)
         {
+          AddImagesToList(path);
+
+            
+            
+
+            var directorypath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Screendumps");
+            ImageOne.Source = previousMediaPlays.Count > 0 ? new BitmapImage(new Uri(directorypath + previousMediaPlays[previousMediaPlays.Count - 1])) : ImageOne.Source;
+            ImageTwo.Source = previousMediaPlays.Count > 1 ? new BitmapImage(new Uri(directorypath + previousMediaPlays[previousMediaPlays.Count - 2])) : ImageTwo.Source;
+            ImageThree.Source = previousMediaPlays.Count > 2 ? new BitmapImage(new Uri(directorypath + previousMediaPlays[previousMediaPlays.Count - 3])) : ImageThree.Source;
+            ImageFour.Source = previousMediaPlays.Count > 3 ? new BitmapImage(new Uri(directorypath + previousMediaPlays[previousMediaPlays.Count - 4])) : ImageFour.Source;
+            ImageFive.Source = previousMediaPlays.Count > 4 ? new BitmapImage(new Uri(directorypath + previousMediaPlays[previousMediaPlays.Count - 5])) : ImageFive.Source;
+            ImageSix.Source = previousMediaPlays.Count > 5 ? new BitmapImage(new Uri(directorypath + previousMediaPlays[previousMediaPlays.Count - 6])) : ImageSix.Source;
+        }
+        
+
+
+        private void AddImagesToList(string path)
+        {
+            var images = Directory.GetFiles(path, "*");
+
+
+            foreach (var image in images)
+            {
+                previousMediaPlays.Add((image.ToString().Substring(image.LastIndexOf("\\"))));
+            }
+            
+        }
+
+        private void CreateDir()
+        {
+
             var directorypath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Screendumps");
             previousFilePath = directorypath.ToString();
             var directory = new DirectoryInfo(directorypath);
@@ -82,14 +112,6 @@ namespace WpfApp1
             {
                 directory.Create();
             }
-        }
-
-      private  int GetPreviousImageCount(string path)
-
-        {
-            int fileCount = Directory.GetFiles(path, "*").Length + 1;
-            MessageBox.Show(fileCount.ToString());
-            return fileCount;
         }
 
         private void TakeMediaImageTick(object sender, EventArgs e)
@@ -113,11 +135,11 @@ namespace WpfApp1
             
             
             encoder.Save(fs);
-
-            string[] previousMedia =  Directory.GetFiles(@"C:\Users\david.jolliffe\Desktop\c#\mediaPlayer\WpfApp1\WpfApp1\Previous");
+            
+            //string[] previousMedia =  Directory.GetFiles(@"C:\Users\david.jolliffe\Desktop\c#\mediaPlayer\WpfApp1\WpfApp1\Previous");
             fs.Close();
 
-            
+            imageTimer.Stop();
             
 
            

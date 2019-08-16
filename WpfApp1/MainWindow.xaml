@@ -405,7 +405,24 @@
                     <Grid.Effect>
                         <DropShadowEffect BlurRadius="20"/>
                     </Grid.Effect>
-                    <Image Source="Assets/back.png" Stretch="UniformToFill" />
+                    <Image x:Name="ImageOne" Source="Assets/Blank.PNG" Stretch="UniformToFill" />
+                    <StackPanel Orientation="Horizontal" Margin="5 -20">
+                        <Grid Width="205">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Button Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
+                                <materialDesign:PackIcon Kind="PlayOutline" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FFFBFBFB" Height="40" Width="40" Grid.Row="0"/>
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Margin="20" Grid.Row="2" Grid.Column="1">
+                    <Grid.Effect>
+                        <DropShadowEffect BlurRadius="20"/>
+                    </Grid.Effect>
+                    <Image x:Name="ImageTwo" Source="Assets/Blank.PNG" Stretch="UniformToFill" />
                     <StackPanel Orientation="Horizontal" Margin="5 -20">
                         <Grid Width="205">
                             <Grid.RowDefinitions>
@@ -417,15 +434,13 @@
                         </Grid>
 
                     </StackPanel>
-
-
                 </Grid>
 
-                <Grid Margin="20" Grid.Row="2" Grid.Column="1">
+                <Grid Margin="20" Grid.Row="2" Grid.Column="2">
                     <Grid.Effect>
                         <DropShadowEffect BlurRadius="20"/>
                     </Grid.Effect>
-                    <Image Source="Assets/landscape.jpg" Stretch="UniformToFill" />
+                <Image x:Name="ImageThree" Source="Assets/Blank.PNG" Stretch="UniformToFill" />
                     <StackPanel Orientation="Horizontal" Margin="5 -20">
                         <Grid Width="205">
                             <Grid.RowDefinitions>
@@ -436,6 +451,58 @@
                             </Button>
                         </Grid>
 
+                    </StackPanel>
+                </Grid>
+
+                <Grid Margin="20" Grid.Row="3" Grid.Column="0">
+                    <Grid.Effect>
+                        <DropShadowEffect BlurRadius="20"/>
+                    </Grid.Effect>
+                <Image x:Name="ImageFour" Source="Assets/Blank.PNG" Stretch="UniformToFill" />
+                    <StackPanel Orientation="Horizontal" Margin="5 -20">
+                        <Grid Width="205">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Button Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
+                                <materialDesign:PackIcon Kind="PlayOutline" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FFFBFBFB" Height="40" Width="40" Grid.Row="0"/>
+                            </Button>
+                        </Grid>
+
+                    </StackPanel>
+                </Grid>
+
+                <Grid Margin="20" Grid.Row="3" Grid.Column="1">
+                    <Grid.Effect>
+                        <DropShadowEffect BlurRadius="20"/>
+                    </Grid.Effect>
+                <Image x:Name="ImageFive" Source="Assets/Blank.PNG" Stretch="UniformToFill" />
+                    <StackPanel Orientation="Horizontal" Margin="5 -20">
+                        <Grid Width="205">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Button Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
+                                <materialDesign:PackIcon Kind="PlayOutline" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FFFBFBFB" Height="40" Width="40" Grid.Row="0"/>
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Margin="20" Grid.Row="3" Grid.Column="2">
+                    <Grid.Effect>
+                        <DropShadowEffect BlurRadius="20"/>
+                    </Grid.Effect>
+                    <Image x:Name="ImageSix" Source="Assets/Blank.PNG" Stretch="UniformToFill" />
+                    <StackPanel Orientation="Horizontal" Margin="5 -20">
+                        <Grid Width="205">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Button Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
+                                <materialDesign:PackIcon Kind="PlayOutline" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FFFBFBFB" Height="40" Width="40" Grid.Row="0"/>
+                            </Button>
+                        </Grid>
                     </StackPanel>
                 </Grid>
 
