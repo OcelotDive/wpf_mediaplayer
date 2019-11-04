@@ -35,7 +35,7 @@ namespace WpfApp1
         DispatcherTimer detectMouseStopTimer;
         DispatcherTimer imageSnapShotTimer;
         string mediaFile;
-        bool isDragging = false;
+        bool scrubberIsDragging = false;
         int secsPlayed = 0;
         bool mediaLoop = false;
         TimeSpan ts;
@@ -280,13 +280,13 @@ namespace WpfApp1
         //Timers
         void TimeSlider_DragStarted(object sender, DragStartedEventArgs e)
         {
-            isDragging = true;
+            scrubberIsDragging = true;
 
         }
 
         void TimeSlider_DragCompleted(object sender, DragCompletedEventArgs e)
         {
-            isDragging = false;
+            scrubberIsDragging = false;
 
             MediaPlayer.Position = TimeSpan.FromSeconds(TimeSlider.Value);
 
@@ -296,7 +296,7 @@ namespace WpfApp1
         }
         void mediaScrubberTimer_Ticker(object sender, EventArgs e)
         {
-            if (!isDragging)
+            if (!scrubberIsDragging)
             {
 
                 TimeSlider.Value = MediaPlayer.Position.TotalSeconds;
