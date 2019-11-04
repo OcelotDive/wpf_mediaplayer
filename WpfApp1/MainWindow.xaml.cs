@@ -75,9 +75,6 @@ namespace WpfApp1
         {
           AddImagesToList(path);
 
-            
-            
-
             var directorypath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Screendumps");
             ImageOne.Source = previousMediaPlays.Count > 0 ? new BitmapImage(new Uri(directorypath + previousMediaPlays[previousMediaPlays.Count - 1])) : ImageOne.Source;
             ImageTwo.Source = previousMediaPlays.Count > 1 ? new BitmapImage(new Uri(directorypath + previousMediaPlays[previousMediaPlays.Count - 2])) : ImageTwo.Source;
