@@ -96,7 +96,14 @@ namespace WpfApp1
 
             foreach (var image in images)
             {
-                previousMediaPlays.Add((image.ToString().Substring(image.LastIndexOf("\\"))));
+                if (previousMediaPlays.Contains(image.ToString().Substring(image.LastIndexOf("\\"))))
+                {
+                   
+                }
+                else
+                {
+                    previousMediaPlays.Add((image.ToString().Substring(image.LastIndexOf("\\"))));
+                }
             }
             
         }
