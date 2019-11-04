@@ -36,9 +36,9 @@ namespace WpfApp1
         DispatcherTimer imageSnapShotTimer;
         string mediaFile;
         bool scrubberIsDragging = false;
-        int secsPlayed = 0;
-        bool mediaLoop = false;
-        TimeSpan ts;
+        int secsMediaHasPlayed = 0;
+        bool mediaIsLooping = false;
+        TimeSpan mediaDuration;
         string previousFilename;
         string previousFilePath;
         List<string> previousMediaPlays = new List<string>();
@@ -215,15 +215,15 @@ namespace WpfApp1
             this.MediaPlayer.Play();
 
 
-            ts = GetMediaDuration(mediaFile);
+            mediaDuration = GetMediaDuration(mediaFile);
 
-            TimeSlider.Maximum = ts.TotalSeconds;
+            TimeSlider.Maximum = mediaDuration.TotalSeconds;
             TimeSlider.SmallChange = 1;
-            TimeSlider.LargeChange = Math.Min(10, ts.Seconds / 10);
+            TimeSlider.LargeChange = Math.Min(10, mediaDuration.Seconds / 10);
             /* use for info string timeResult = string.Format("{0:D2}h:{1:D2}m:{2:D2}s",
-                ts.Hours,
-                ts.Minutes,
-                ts.Seconds);
+                mediaDuration.Hours,
+                mediaDuration.Minutes,
+                mediaDuration.Seconds);
                  */
 
             mediaScrubberTimer.Start();
@@ -291,7 +291,7 @@ namespace WpfApp1
             MediaPlayer.Position = TimeSpan.FromSeconds(TimeSlider.Value);
 
 
-            secsPlayed = (int)TimeSlider.Value;
+            secsMediaHasPlayed = (int)TimeSlider.Value;
 
         }
         void mediaScrubberTimer_Ticker(object sender, EventArgs e)
@@ -309,24 +309,24 @@ namespace WpfApp1
         void DisplayTime_Ticker(object sender, EventArgs e)
         {
 
-            if (TimeDisplay.Text == "00h:00m:00s" && !mediaLoop) //media ends events
+            if (TimeDisplay.Text == "00h:00m:00s" && !mediaIsLooping) //media ends events
             {
-                secsPlayed = 0;
+                secsMediaHasPlayed = 0;
                 timerDisplay.Stop();
                 MediaPlayer.Stop();
                 PlayButton.Visibility = Visibility.Visible;
                 PauseButton.Visibility = Visibility.Collapsed;
             }
-            else if (TimeDisplay.Text == "00h:00m:00s" && mediaLoop)
+            else if (TimeDisplay.Text == "00h:00m:00s" && mediaIsLooping)
             {
-                secsPlayed = 0;
+                secsMediaHasPlayed = 0;
                 timerDisplay.Stop();
                 MediaPlayer.Stop();
                 timerDisplay.Start();
                 MediaPlayer.Play();
             }
             TimeSpan dt = GetMediaDuration(mediaFile);
-            dt = dt.Subtract(TimeSpan.FromSeconds(secsPlayed));
+            dt = dt.Subtract(TimeSpan.FromSeconds(secsMediaHasPlayed));
 
             string timeResult = string.Format("{0:D2}h:{1:D2}m:{2:D2}s",
                dt.Hours,
@@ -334,7 +334,7 @@ namespace WpfApp1
                dt.Seconds);
             TimeDisplay.Text = timeResult;
 
-            secsPlayed++;
+            secsMediaHasPlayed++;
 
         }
 
@@ -391,16 +391,16 @@ namespace WpfApp1
         private void MouseHeldDownForward(object sender, EventArgs e)
         {
 
-            if (MediaPlayer.Position <= ts.Subtract(TimeSpan.FromSeconds(30)))
+            if (MediaPlayer.Position <= mediaDuration.Subtract(TimeSpan.FromSeconds(30)))
             {
                 MediaPlayer.Position = TimeSpan.FromSeconds(TimeSlider.Value + 30);
-                secsPlayed = secsPlayed + 30;
+                secsMediaHasPlayed = secsMediaHasPlayed + 30;
             }
             else
             {
                 mouseLeftDownTimer.Stop();
                 timerDisplay.Stop();
-                secsPlayed = 0;
+                secsMediaHasPlayed = 0;
                 MediaPlayer.Stop();
                 TimeDisplay.Text = "00:00:00";
                 PlayButton.Visibility = Visibility.Visible;
@@ -415,13 +415,13 @@ namespace WpfApp1
 
             {
                 MediaPlayer.Position = TimeSpan.FromSeconds(TimeSlider.Value - 30);
-                secsPlayed = secsPlayed - 30;
+                secsMediaHasPlayed = secsMediaHasPlayed - 30;
             }
             else
             {
                 mouseLeftDownTimer.Stop();
                 timerDisplay.Stop();
-                secsPlayed = 0;
+                secsMediaHasPlayed = 0;
                 MediaPlayer.Stop();
                 TimeDisplay.Text = "00:00:00";
                 PlayButton.Visibility = Visibility.Visible;
@@ -434,15 +434,15 @@ namespace WpfApp1
         {
             LoopButton.Visibility = Visibility.Collapsed;
             UnLoopButton.Visibility = Visibility.Visible;
-           
-            mediaLoop = false;
+
+            mediaIsLooping = false;
         }
 
         private void UnLoopButton_Click(object sender, RoutedEventArgs e)
         {
             LoopButton.Visibility = Visibility.Visible;
             UnLoopButton.Visibility = Visibility.Collapsed;
-            mediaLoop = true;
+            mediaIsLooping = true;
         }
 
         private void ShowVolumeButton_Click(object sender, RoutedEventArgs e)
