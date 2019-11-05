@@ -78,9 +78,9 @@ namespace WpfApp1
             Image[] imageElementArray = { ImageOne, ImageTwo, ImageThree, ImageFour, ImageFive, ImageSix };
 
             DirectoryInfo info = new DirectoryInfo(path);
-            FileInfo[] imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).Reverse().ToArray();
+            FileInfo[] imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).ToArray();
             if (imageFiles.Length == 7) File.Delete(previouslyPlayedFilesPath + "\\" + imageFiles[0].ToString());
-            imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).ToArray();
+            imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).Reverse().ToArray();
             
 
             for (var i = 0; i < imageFiles.Length; i++)
