@@ -38,7 +38,7 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>57718DDC4B4F0D5012E9A64B17F090B46ABB36D8</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>B90AF50B68B6522D3F054EB7645C6F6600B459FF</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>WpfApp1_TemporaryKey.pfx</ManifestKeyFile>
@@ -47,7 +47,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>WpfApp1_TemporaryKey.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MaterialDesignColors, Version=1.2.0.325, Culture=neutral, processorArchitecture=MSIL">

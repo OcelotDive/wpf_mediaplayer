@@ -40,8 +40,8 @@ namespace WpfApp1
         bool mediaIsLooping = false;
         TimeSpan mediaDuration;
         string previousFilename;
-        string previousFilePath;
-        List<string> previousMediaPlays = new List<string>();
+        string previouslyPlayedFilesPath;
+        List<string> previousMediaPlayImages = new List<string>();
         
 
         public MainWindow()
@@ -62,55 +62,46 @@ namespace WpfApp1
             detectMouseStopTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(5) };
             detectMouseStopTimer.Tick += new EventHandler(MouseStop_Ticker);
 
-            imageSnapShotTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(10) };
+            imageSnapShotTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(5) };
             imageSnapShotTimer.Tick += new EventHandler(TakeMediaImage_Ticker);
 
             CreateDir();
-            AddImages(previousFilePath);
+            AddImagesToView(previouslyPlayedFilesPath);
             
         }
 
 
-        private void AddImages(string path)
+        private void AddImagesToView(string path)
         {
-          AddImagesToList(path);
+      
+           // AddImagesToList(path);
+            Image[] imageElementArray = { ImageOne, ImageTwo, ImageThree, ImageFour, ImageFive, ImageSix };
 
-            var directorypath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Screendumps");
-            ImageOne.Source = previousMediaPlays.Count > 0 ? new BitmapImage(new Uri(directorypath + previousMediaPlays[previousMediaPlays.Count - 1])) : ImageOne.Source;
-            ImageTwo.Source = previousMediaPlays.Count > 1 ? new BitmapImage(new Uri(directorypath + previousMediaPlays[previousMediaPlays.Count - 2])) : ImageTwo.Source;
-            ImageThree.Source = previousMediaPlays.Count > 2 ? new BitmapImage(new Uri(directorypath + previousMediaPlays[previousMediaPlays.Count - 3])) : ImageThree.Source;
-            ImageFour.Source = previousMediaPlays.Count > 3 ? new BitmapImage(new Uri(directorypath + previousMediaPlays[previousMediaPlays.Count - 4])) : ImageFour.Source;
-            ImageFive.Source = previousMediaPlays.Count > 4 ? new BitmapImage(new Uri(directorypath + previousMediaPlays[previousMediaPlays.Count - 5])) : ImageFive.Source;
-            ImageSix.Source = previousMediaPlays.Count > 5 ? new BitmapImage(new Uri(directorypath + previousMediaPlays[previousMediaPlays.Count - 6])) : ImageSix.Source;
-        }
-        
+            DirectoryInfo info = new DirectoryInfo(path);
+            FileInfo[] imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).ToArray();
+            if (imageFiles.Length == 7) File.Delete(previouslyPlayedFilesPath + "\\" + imageFiles[0].ToString());
+            imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).ToArray();
+            
 
-
-        private void AddImagesToList(string path)
-        {
-            var images = Directory.GetFiles(path, "*");
-
-
-            foreach (var image in images)
+            for (var i = 0; i < imageFiles.Length; i++)
             {
-                if (previousMediaPlays.Contains(image.ToString().Substring(image.LastIndexOf("\\"))))
-                {
-                   
-                }
-                else
-                {
-                    previousMediaPlays.Add((image.ToString().Substring(image.LastIndexOf("\\"))));
-                }
+                
+                imageElementArray[i].Source = new BitmapImage(new Uri(previouslyPlayedFilesPath + "\\" + imageFiles[i].ToString()));
             }
             
+
+
         }
+        
+      
+       
+     
 
         private void CreateDir()
         {
-
-            var directorypath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Screendumps");
-            previousFilePath = directorypath.ToString();
-            var directory = new DirectoryInfo(directorypath);
+            var pathToImagesDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Screendumps");
+            previouslyPlayedFilesPath = pathToImagesDirectory.ToString();
+            var directory = new DirectoryInfo(pathToImagesDirectory);
 
             if (!directory.Exists)
             {
@@ -120,6 +111,12 @@ namespace WpfApp1
 
         private void TakeMediaImage_Ticker(object sender, EventArgs e)
         {
+
+         
+          
+            
+
+
             Size dpi = new Size(96, 96);
 
             RenderTargetBitmap bmp =
@@ -135,11 +132,12 @@ namespace WpfApp1
 
 
             previousFilename = Guid.NewGuid().ToString() + ".jpg";
-            FileStream fs = new FileStream(System.IO.Path.Combine(previousFilePath,previousFilename), FileMode.Create);
+            FileStream fs = new FileStream(System.IO.Path.Combine(previouslyPlayedFilesPath,previousFilename), FileMode.Create);
             
             
             encoder.Save(fs);
             
+
             //string[] previousMedia =  Directory.GetFiles(@"C:\Users\david.jolliffe\Desktop\c#\mediaPlayer\WpfApp1\WpfApp1\Previous");
             fs.Close();
 
@@ -165,6 +163,7 @@ namespace WpfApp1
 
         private void ApplicationClose()
         {
+          
             Application.Current.Shutdown();
         }
 
@@ -271,6 +270,7 @@ namespace WpfApp1
             this.mediaDisplay.Visibility = Visibility.Collapsed;
             this.OpenMenu.Visibility = Visibility.Visible;
             timerDisplay.Stop();
+        
         }
 
 
