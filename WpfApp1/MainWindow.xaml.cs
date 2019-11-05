@@ -74,11 +74,11 @@ namespace WpfApp1
         private void AddImagesToView(string path)
         {
       
-           // AddImagesToList(path);
+         
             Image[] imageElementArray = { ImageOne, ImageTwo, ImageThree, ImageFour, ImageFive, ImageSix };
 
             DirectoryInfo info = new DirectoryInfo(path);
-            FileInfo[] imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).ToArray();
+            FileInfo[] imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).Reverse().ToArray();
             if (imageFiles.Length == 7) File.Delete(previouslyPlayedFilesPath + "\\" + imageFiles[0].ToString());
             imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).ToArray();
             
