@@ -29,16 +29,16 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
-        DispatcherTimer timer;
+        DispatcherTimer mediaScrubberTimer;
         DispatcherTimer timerDisplay;
         DispatcherTimer mouseLeftDownTimer;
-        DispatcherTimer mouseStopTimer;
-        DispatcherTimer imageTimer;
+        DispatcherTimer detectMouseStopTimer;
+        DispatcherTimer imageSnapShotTimer;
         string mediaFile;
-        bool isDragging = false;
-        int secsPlayed = 0;
-        bool mediaLoop = false;
-        TimeSpan ts;
+        bool scrubberIsDragging = false;
+        int secsMediaHasPlayed = 0;
+        bool mediaIsLooping = false;
+        TimeSpan mediaDuration;
         string previousFilename;
         string previousFilePath;
         List<string> previousMediaPlays = new List<string>();
@@ -48,35 +48,32 @@ namespace WpfApp1
         {
 
             InitializeComponent();
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(200);
-            timer.Tick += new EventHandler(timer_Tick);
+            mediaScrubberTimer = new DispatcherTimer();
+            mediaScrubberTimer.Interval = TimeSpan.FromMilliseconds(200);
+            mediaScrubberTimer.Tick += new EventHandler(mediaScrubberTimer_Ticker);
 
             timerDisplay = new DispatcherTimer();
             timerDisplay.Interval = TimeSpan.FromMilliseconds(1000);
-            timerDisplay.Tick += new EventHandler(DisplayTime);
+            timerDisplay.Tick += new EventHandler(DisplayTime_Ticker);
 
             mouseLeftDownTimer = new DispatcherTimer();
             mouseLeftDownTimer.Interval = TimeSpan.FromMilliseconds(200);
 
+            detectMouseStopTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(5) };
+            detectMouseStopTimer.Tick += new EventHandler(MouseStop_Ticker);
 
-            mouseStopTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(5) };
-            mouseStopTimer.Tick += new EventHandler(MouseStopTick);
-
-            imageTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(10) };
-            imageTimer.Tick += new EventHandler(TakeMediaImageTick);
+            imageSnapShotTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(10) };
+            imageSnapShotTimer.Tick += new EventHandler(TakeMediaImage_Ticker);
 
             CreateDir();
             AddImages(previousFilePath);
+            
         }
 
 
         private void AddImages(string path)
         {
           AddImagesToList(path);
-
-            
-            
 
             var directorypath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Screendumps");
             ImageOne.Source = previousMediaPlays.Count > 0 ? new BitmapImage(new Uri(directorypath + previousMediaPlays[previousMediaPlays.Count - 1])) : ImageOne.Source;
@@ -96,7 +93,14 @@ namespace WpfApp1
 
             foreach (var image in images)
             {
-                previousMediaPlays.Add((image.ToString().Substring(image.LastIndexOf("\\"))));
+                if (previousMediaPlays.Contains(image.ToString().Substring(image.LastIndexOf("\\"))))
+                {
+                   
+                }
+                else
+                {
+                    previousMediaPlays.Add((image.ToString().Substring(image.LastIndexOf("\\"))));
+                }
             }
             
         }
@@ -114,7 +118,7 @@ namespace WpfApp1
             }
         }
 
-        private void TakeMediaImageTick(object sender, EventArgs e)
+        private void TakeMediaImage_Ticker(object sender, EventArgs e)
         {
             Size dpi = new Size(96, 96);
 
@@ -139,15 +143,15 @@ namespace WpfApp1
             //string[] previousMedia =  Directory.GetFiles(@"C:\Users\david.jolliffe\Desktop\c#\mediaPlayer\WpfApp1\WpfApp1\Previous");
             fs.Close();
 
-            imageTimer.Stop();
+            imageSnapShotTimer.Stop();
             
 
            
         }
 
-        private void MouseStopTick(object sender, EventArgs e)
+        private void MouseStop_Ticker(object sender, EventArgs e)
         {
-            mouseStopTimer.Stop();
+            detectMouseStopTimer.Stop();
             Storyboard fadeControls = this.FindResource("AutoFadeControls") as Storyboard;
             Storyboard.SetTarget(fadeControls, this);
             fadeControls.Begin();
@@ -208,21 +212,21 @@ namespace WpfApp1
             this.MediaPlayer.Play();
 
 
-            ts = GetMediaDuration(mediaFile);
+            mediaDuration = GetMediaDuration(mediaFile);
 
-            TimeSlider.Maximum = ts.TotalSeconds;
+            TimeSlider.Maximum = mediaDuration.TotalSeconds;
             TimeSlider.SmallChange = 1;
-            TimeSlider.LargeChange = Math.Min(10, ts.Seconds / 10);
+            TimeSlider.LargeChange = Math.Min(10, mediaDuration.Seconds / 10);
             /* use for info string timeResult = string.Format("{0:D2}h:{1:D2}m:{2:D2}s",
-                ts.Hours,
-                ts.Minutes,
-                ts.Seconds);
+                mediaDuration.Hours,
+                mediaDuration.Minutes,
+                mediaDuration.Seconds);
                  */
 
-            timer.Start();
+            mediaScrubberTimer.Start();
             
             timerDisplay.Start();
-            imageTimer.Start();
+            imageSnapShotTimer.Start();
         }
 
         private static TimeSpan GetMediaDuration(string mediaFile)
@@ -273,23 +277,23 @@ namespace WpfApp1
         //Timers
         void TimeSlider_DragStarted(object sender, DragStartedEventArgs e)
         {
-            isDragging = true;
+            scrubberIsDragging = true;
 
         }
 
         void TimeSlider_DragCompleted(object sender, DragCompletedEventArgs e)
         {
-            isDragging = false;
+            scrubberIsDragging = false;
 
             MediaPlayer.Position = TimeSpan.FromSeconds(TimeSlider.Value);
 
 
-            secsPlayed = (int)TimeSlider.Value;
+            secsMediaHasPlayed = (int)TimeSlider.Value;
 
         }
-        void timer_Tick(object sender, EventArgs e)
+        void mediaScrubberTimer_Ticker(object sender, EventArgs e)
         {
-            if (!isDragging)
+            if (!scrubberIsDragging)
             {
 
                 TimeSlider.Value = MediaPlayer.Position.TotalSeconds;
@@ -299,27 +303,27 @@ namespace WpfApp1
         }
 
 
-        void DisplayTime(object sender, EventArgs e)
+        void DisplayTime_Ticker(object sender, EventArgs e)
         {
 
-            if (TimeDisplay.Text == "00h:00m:00s" && !mediaLoop) //media ends events
+            if (TimeDisplay.Text == "00h:00m:00s" && !mediaIsLooping) //media ends events
             {
-                secsPlayed = 0;
+                secsMediaHasPlayed = 0;
                 timerDisplay.Stop();
                 MediaPlayer.Stop();
                 PlayButton.Visibility = Visibility.Visible;
                 PauseButton.Visibility = Visibility.Collapsed;
             }
-            else if (TimeDisplay.Text == "00h:00m:00s" && mediaLoop)
+            else if (TimeDisplay.Text == "00h:00m:00s" && mediaIsLooping)
             {
-                secsPlayed = 0;
+                secsMediaHasPlayed = 0;
                 timerDisplay.Stop();
                 MediaPlayer.Stop();
                 timerDisplay.Start();
                 MediaPlayer.Play();
             }
             TimeSpan dt = GetMediaDuration(mediaFile);
-            dt = dt.Subtract(TimeSpan.FromSeconds(secsPlayed));
+            dt = dt.Subtract(TimeSpan.FromSeconds(secsMediaHasPlayed));
 
             string timeResult = string.Format("{0:D2}h:{1:D2}m:{2:D2}s",
                dt.Hours,
@@ -327,7 +331,7 @@ namespace WpfApp1
                dt.Seconds);
             TimeDisplay.Text = timeResult;
 
-            secsPlayed++;
+            secsMediaHasPlayed++;
 
         }
 
@@ -384,16 +388,16 @@ namespace WpfApp1
         private void MouseHeldDownForward(object sender, EventArgs e)
         {
 
-            if (MediaPlayer.Position <= ts.Subtract(TimeSpan.FromSeconds(30)))
+            if (MediaPlayer.Position <= mediaDuration.Subtract(TimeSpan.FromSeconds(30)))
             {
                 MediaPlayer.Position = TimeSpan.FromSeconds(TimeSlider.Value + 30);
-                secsPlayed = secsPlayed + 30;
+                secsMediaHasPlayed = secsMediaHasPlayed + 30;
             }
             else
             {
                 mouseLeftDownTimer.Stop();
                 timerDisplay.Stop();
-                secsPlayed = 0;
+                secsMediaHasPlayed = 0;
                 MediaPlayer.Stop();
                 TimeDisplay.Text = "00:00:00";
                 PlayButton.Visibility = Visibility.Visible;
@@ -408,13 +412,13 @@ namespace WpfApp1
 
             {
                 MediaPlayer.Position = TimeSpan.FromSeconds(TimeSlider.Value - 30);
-                secsPlayed = secsPlayed - 30;
+                secsMediaHasPlayed = secsMediaHasPlayed - 30;
             }
             else
             {
                 mouseLeftDownTimer.Stop();
                 timerDisplay.Stop();
-                secsPlayed = 0;
+                secsMediaHasPlayed = 0;
                 MediaPlayer.Stop();
                 TimeDisplay.Text = "00:00:00";
                 PlayButton.Visibility = Visibility.Visible;
@@ -427,15 +431,15 @@ namespace WpfApp1
         {
             LoopButton.Visibility = Visibility.Collapsed;
             UnLoopButton.Visibility = Visibility.Visible;
-           
-            mediaLoop = false;
+
+            mediaIsLooping = false;
         }
 
         private void UnLoopButton_Click(object sender, RoutedEventArgs e)
         {
             LoopButton.Visibility = Visibility.Visible;
             UnLoopButton.Visibility = Visibility.Collapsed;
-            mediaLoop = true;
+            mediaIsLooping = true;
         }
 
         private void ShowVolumeButton_Click(object sender, RoutedEventArgs e)
@@ -456,8 +460,8 @@ namespace WpfApp1
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
-            mouseStopTimer.Stop();
-            mouseStopTimer.Start();
+           detectMouseStopTimer.Stop();
+            detectMouseStopTimer.Start();
             
         }
 
