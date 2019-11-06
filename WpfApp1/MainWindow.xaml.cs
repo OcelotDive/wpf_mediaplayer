@@ -73,30 +73,22 @@ namespace WpfApp1
 
         private void AddImagesToView(string path)
         {
-      
-         
             Image[] imageElementArray = { ImageOne, ImageTwo, ImageThree, ImageFour, ImageFive, ImageSix };
-
             DirectoryInfo info = new DirectoryInfo(path);
             FileInfo[] imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).ToArray();
-            if (imageFiles.Length == 7) File.Delete(previouslyPlayedFilesPath + "\\" + imageFiles[0].ToString());
-            imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).Reverse().ToArray();
-            
 
-            for (var i = 0; i < imageFiles.Length; i++)
+            if (imageFiles.Length == 7)
             {
-                
+                File.Delete(previouslyPlayedFilesPath + "\\" + imageFiles[0].ToString());
+            }
+
+            imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).Reverse().ToArray();
+            for (var i = 0; i < imageFiles.Length; i++)
+            {    
                 imageElementArray[i].Source = new BitmapImage(new Uri(previouslyPlayedFilesPath + "\\" + imageFiles[i].ToString()));
             }
-            
-
-
         }
         
-      
-       
-     
-
         private void CreateDir()
         {
             var pathToImagesDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Screendumps");
@@ -112,39 +104,22 @@ namespace WpfApp1
         private void TakeMediaImage_Ticker(object sender, EventArgs e)
         {
 
-         
-          
-            
-
-
             Size dpi = new Size(96, 96);
-
             RenderTargetBitmap bmp =
                 new RenderTargetBitmap((int)window.Width, (int)window.Height - 120,
-                    dpi.Width, dpi.Height, PixelFormats.Pbgra32);
+                dpi.Width, dpi.Height, PixelFormats.Pbgra32);
             bmp.Render(mediaDisplay);
-
             JpegBitmapEncoder encoder = new JpegBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(bmp));
 
-
-            
-
-
             previousFilename = Guid.NewGuid().ToString() + ".jpg";
             FileStream fs = new FileStream(System.IO.Path.Combine(previouslyPlayedFilesPath,previousFilename), FileMode.Create);
-            
-            
+           
             encoder.Save(fs);
-            
-
-            //string[] previousMedia =  Directory.GetFiles(@"C:\Users\david.jolliffe\Desktop\c#\mediaPlayer\WpfApp1\WpfApp1\Previous");
+           
             fs.Close();
 
-            imageSnapShotTimer.Stop();
-            
-
-           
+            imageSnapShotTimer.Stop();   
         }
 
         private void MouseStop_Ticker(object sender, EventArgs e)
@@ -162,8 +137,7 @@ namespace WpfApp1
         }
 
         private void ApplicationClose()
-        {
-          
+        {  
             Application.Current.Shutdown();
         }
 
@@ -210,18 +184,12 @@ namespace WpfApp1
             this.mediaDisplay.Visibility = Visibility.Visible;
             this.MediaPlayer.Play();
 
-
             mediaDuration = GetMediaDuration(mediaFile);
 
             TimeSlider.Maximum = mediaDuration.TotalSeconds;
             TimeSlider.SmallChange = 1;
             TimeSlider.LargeChange = Math.Min(10, mediaDuration.Seconds / 10);
-            /* use for info string timeResult = string.Format("{0:D2}h:{1:D2}m:{2:D2}s",
-                mediaDuration.Hours,
-                mediaDuration.Minutes,
-                mediaDuration.Seconds);
-                 */
-
+   
             mediaScrubberTimer.Start();
             
             timerDisplay.Start();
@@ -278,7 +246,6 @@ namespace WpfApp1
         void TimeSlider_DragStarted(object sender, DragStartedEventArgs e)
         {
             scrubberIsDragging = true;
-
         }
 
         void TimeSlider_DragCompleted(object sender, DragCompletedEventArgs e)
@@ -287,19 +254,15 @@ namespace WpfApp1
 
             MediaPlayer.Position = TimeSpan.FromSeconds(TimeSlider.Value);
 
-
             secsMediaHasPlayed = (int)TimeSlider.Value;
-
         }
+
         void mediaScrubberTimer_Ticker(object sender, EventArgs e)
         {
             if (!scrubberIsDragging)
             {
-
                 TimeSlider.Value = MediaPlayer.Position.TotalSeconds;
-
             }
-
         }
 
 
@@ -330,9 +293,7 @@ namespace WpfApp1
                dt.Minutes,
                dt.Seconds);
             TimeDisplay.Text = timeResult;
-
             secsMediaHasPlayed++;
-
         }
 
         private void HandleMaximise(object sender, RoutedEventArgs e)
@@ -382,12 +343,10 @@ namespace WpfApp1
                 mouseLeftDownTimer.Tick += new EventHandler(MouseHeldDownRewind);
             }
             mouseLeftDownTimer.Start();
-
         }
 
         private void MouseHeldDownForward(object sender, EventArgs e)
         {
-
             if (MediaPlayer.Position <= mediaDuration.Subtract(TimeSpan.FromSeconds(30)))
             {
                 MediaPlayer.Position = TimeSpan.FromSeconds(TimeSlider.Value + 30);
@@ -407,7 +366,6 @@ namespace WpfApp1
 
         private void MouseHeldDownRewind(object sender, EventArgs e)
         {
-
             if (MediaPlayer.Position >= TimeSpan.Parse("00:00:30"))
 
             {
@@ -431,7 +389,6 @@ namespace WpfApp1
         {
             LoopButton.Visibility = Visibility.Collapsed;
             UnLoopButton.Visibility = Visibility.Visible;
-
             mediaIsLooping = false;
         }
 
@@ -461,7 +418,7 @@ namespace WpfApp1
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
            detectMouseStopTimer.Stop();
-            detectMouseStopTimer.Start();
+           detectMouseStopTimer.Start();
             
         }
 
