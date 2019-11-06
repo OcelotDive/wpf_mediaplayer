@@ -400,24 +400,31 @@
                 </Button>
                 <TextBlock x:Name="textBlock"  Text="Recent Playlist" Foreground="#FF418CD6" FontSize="30" FontWeight="Bold" Margin="5 5" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"/>
 
+               
+                    <Grid Margin="20" Grid.Row="2" Grid.Column="0">
+                  
+                        <Grid.Effect>
+                            <DropShadowEffect BlurRadius="20"/>
+                        </Grid.Effect>
 
-                <Grid Margin="20" Grid.Row="2" Grid.Column="0">
-                    <Grid.Effect>
-                        <DropShadowEffect BlurRadius="20"/>
-                    </Grid.Effect>
+
                     <Image x:Name="ImageOne" Source="Assets/Blank.PNG" Stretch="UniformToFill" />
-                    <StackPanel Orientation="Horizontal" Margin="5 -20">
-                        <Grid Width="205">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <Button Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
-                                <materialDesign:PackIcon Kind="PlayOutline" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FFFBFBFB" Height="40" Width="40" Grid.Row="0"/>
-                            </Button>
-                        </Grid>
-                    </StackPanel>
-                </Grid>
 
+
+                    <StackPanel Orientation="Horizontal" Margin="5 -20">
+                            <Grid Width="205">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Button Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
+                                    <materialDesign:PackIcon Kind="PlayOutline" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FFFBFBFB" Height="40" Width="40" Grid.Row="0"/>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+
+                    <TextBlock x:Name="ImageOneMediaName"  Text="" Foreground="#FF418CD6" FontSize="15" FontWeight="Bold" Margin="5 5" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"/>
+                </Grid>
+               
                 <Grid Margin="20" Grid.Row="2" Grid.Column="1">
                     <Grid.Effect>
                         <DropShadowEffect BlurRadius="20"/>

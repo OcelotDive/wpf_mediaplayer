@@ -39,10 +39,11 @@ namespace WpfApp1
         int secsMediaHasPlayed = 0;
         bool mediaIsLooping = false;
         TimeSpan mediaDuration;
-        string previousFilename;
-        string previouslyPlayedFilesPath;
+        //string previousImageName;
+        string previouslyPlayedImagesPath;
+        string previouslyPlayedFileInfoPath;
         List<string> previousMediaPlayImages = new List<string>();
-        
+        Queue<string> mediaTitleCollection = new Queue<string>();
 
         public MainWindow()
         {
@@ -65,45 +66,71 @@ namespace WpfApp1
             imageSnapShotTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(5) };
             imageSnapShotTimer.Tick += new EventHandler(TakeMediaImage_Ticker);
 
-            CreateDir();
-            AddImagesToView(previouslyPlayedFilesPath);
+            CreateDirectories();
+            AddImagesToView(previouslyPlayedImagesPath);
             
         }
 
 
         private void AddImagesToView(string path)
         {
+            
             Image[] imageElementArray = { ImageOne, ImageTwo, ImageThree, ImageFour, ImageFive, ImageSix };
             DirectoryInfo info = new DirectoryInfo(path);
             FileInfo[] imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).ToArray();
 
             if (imageFiles.Length == 7)
             {
-                File.Delete(previouslyPlayedFilesPath + "\\" + imageFiles[0].ToString());
+                File.Delete(previouslyPlayedImagesPath + "\\" + imageFiles[0].ToString());
             }
 
             imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).Reverse().ToArray();
             for (var i = 0; i < imageFiles.Length; i++)
             {    
-                imageElementArray[i].Source = new BitmapImage(new Uri(previouslyPlayedFilesPath + "\\" + imageFiles[i].ToString()));
+                imageElementArray[i].Source = new BitmapImage(new Uri(previouslyPlayedImagesPath + "\\" + imageFiles[i].ToString()));
+                
             }
         }
         
-        private void CreateDir()
+        private void CreateDirectories()
         {
-            var pathToImagesDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Screendumps");
-            previouslyPlayedFilesPath = pathToImagesDirectory.ToString();
-            var directory = new DirectoryInfo(pathToImagesDirectory);
-
-            if (!directory.Exists)
+            var pathToRootMediaDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "WPFMEDIA");
+            var rootDirectory = new DirectoryInfo(pathToRootMediaDirectory);
+            if(!rootDirectory.Exists)
             {
-                directory.Create();
+                rootDirectory.Create();
             }
+            var pathToImagesDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//WPFMEDIA", "Screendumps");
+            previouslyPlayedImagesPath = pathToImagesDirectory.ToString();
+            var imageDirectory = new DirectoryInfo(pathToImagesDirectory);
+
+            if (!imageDirectory.Exists)
+            {
+                imageDirectory.Create();
+            }
+            var pathToInfoFileDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//WPFMEDIA", "Info");
+            previouslyPlayedFileInfoPath = pathToInfoFileDirectory.ToString();
+            var infoDirectory = new DirectoryInfo(pathToInfoFileDirectory);
+
+            if (!infoDirectory.Exists)
+            {
+                infoDirectory.Create();
+            }
+        }
+
+        private void AddMediaTitleToCollection(string mediaFile)
+        {
+            string mediaTitle = mediaFile.Substring(mediaFile.LastIndexOf("\\") + 1);
+            mediaTitleCollection.Enqueue(mediaTitle);
+            if(mediaTitleCollection.Count == 7)
+            {
+                mediaTitleCollection.Dequeue();
+            }
+            ImageOneMediaName.Text = mediaTitleCollection.ElementAt(0);
         }
 
         private void TakeMediaImage_Ticker(object sender, EventArgs e)
         {
-
             Size dpi = new Size(96, 96);
             RenderTargetBitmap bmp =
                 new RenderTargetBitmap((int)window.Width, (int)window.Height - 120,
@@ -112,13 +139,13 @@ namespace WpfApp1
             JpegBitmapEncoder encoder = new JpegBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(bmp));
 
-            previousFilename = Guid.NewGuid().ToString() + ".jpg";
-            FileStream fs = new FileStream(System.IO.Path.Combine(previouslyPlayedFilesPath,previousFilename), FileMode.Create);
+           string previousImageName = Guid.NewGuid().ToString() + ".jpg";
+            FileStream fs = new FileStream(System.IO.Path.Combine(previouslyPlayedImagesPath,previousImageName), FileMode.Create);
            
             encoder.Save(fs);
            
             fs.Close();
-
+            AddMediaTitleToCollection(mediaFile);
             imageSnapShotTimer.Stop();   
         }
 
@@ -206,9 +233,6 @@ namespace WpfApp1
             }
         }
 
-
-
-
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
             if (MediaPlayer.CanPause)
@@ -238,7 +262,6 @@ namespace WpfApp1
             this.mediaDisplay.Visibility = Visibility.Collapsed;
             this.OpenMenu.Visibility = Visibility.Visible;
             timerDisplay.Stop();
-        
         }
 
 
@@ -418,8 +441,7 @@ namespace WpfApp1
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
            detectMouseStopTimer.Stop();
-           detectMouseStopTimer.Start();
-            
+           detectMouseStopTimer.Start();   
         }
 
       
