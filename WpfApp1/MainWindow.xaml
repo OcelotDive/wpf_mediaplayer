@@ -422,7 +422,7 @@
                             </Grid>
                         </StackPanel>
 
-                    <TextBlock x:Name="ImageOnePreviousMediaName"   Foreground="#FF418CD6" FontSize="15" FontWeight="Bold" Margin="5 5" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"/>
+                    <TextBlock x:Name="ImageOneName"   Foreground="#FF418CD6" FontSize="15" FontWeight="Bold" Margin="5 5" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"/>
                 </Grid>
                
                 <Grid Margin="20" Grid.Row="2" Grid.Column="1">
@@ -441,7 +441,7 @@
                         </Grid>
 
                     </StackPanel>
-                    <TextBlock x:Name="ImageTwoPreviousMediaName"   Foreground="#FF418CD6" FontSize="15" FontWeight="Bold" Margin="5 5" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"/>
+                    <TextBlock x:Name="ImageTwoName"   Foreground="#FF418CD6" FontSize="15" FontWeight="Bold" Margin="5 5" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"/>
                 </Grid>
 
                 <Grid Margin="20" Grid.Row="2" Grid.Column="2">
@@ -460,7 +460,7 @@
                         </Grid>
 
                     </StackPanel>
-                    <TextBlock x:Name="ImageThreePreviousMediaName"   Foreground="#FF418CD6" FontSize="15" FontWeight="Bold" Margin="5 5" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"/>
+                    <TextBlock x:Name="ImageThreeName"   Foreground="#FF418CD6" FontSize="15" FontWeight="Bold" Margin="5 5" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"/>
                 </Grid>
 
                 <Grid Margin="20" Grid.Row="3" Grid.Column="0">
@@ -479,7 +479,7 @@
                         </Grid>
 
                     </StackPanel>
-                    <TextBlock x:Name="ImageFourPreviousMediaName"   Foreground="#FF418CD6" FontSize="15" FontWeight="Bold" Margin="5 5" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"/>
+                    <TextBlock x:Name="ImageFourName"   Foreground="#FF418CD6" FontSize="15" FontWeight="Bold" Margin="5 5" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"/>
                 </Grid>
 
                 <Grid Margin="20" Grid.Row="3" Grid.Column="1">
@@ -497,7 +497,7 @@
                             </Button>
                         </Grid>
                     </StackPanel>
-                    <TextBlock x:Name="ImageFivePreviousMediaName"   Foreground="#FF418CD6" FontSize="15" FontWeight="Bold" Margin="5 5" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"/>
+                    <TextBlock x:Name="ImageFiveName"   Foreground="#FF418CD6" FontSize="15" FontWeight="Bold" Margin="5 5" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"/>
                 </Grid>
 
                 <Grid Margin="20" Grid.Row="3" Grid.Column="2">
@@ -515,7 +515,7 @@
                             </Button>
                         </Grid>
                     </StackPanel>
-                    <TextBlock x:Name="ImageSixPreviousMediaName"   Foreground="#FF418CD6" FontSize="15" FontWeight="Bold" Margin="5 5" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"/>
+                    <TextBlock x:Name="ImageSixName"   Foreground="#FF418CD6" FontSize="15" FontWeight="Bold" Margin="5 5" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"/>
                 </Grid>
 
 

@@ -66,75 +66,37 @@ namespace WpfApp1
             imageSnapShotTimer.Tick += new EventHandler(TakeMediaImage_Ticker);
 
             CreateDirectories();
-            AddImagesToView(previouslyPlayedImagesPath, previouslyPlayedFileInfoPath);
+            AddImagesToView(previouslyPlayedImagesPath);
             
         }
 
 
-        private void AddImagesToView(string imagePath, string filePath)
+        private void AddImagesToView(string imagePath)
         {
             
-            Image[] imageElementArray = { ImageOne, ImageTwo, ImageThree, ImageFour, ImageFive, ImageSix };
-            TextBlock[] prevousMediaPlayXamlNames = { ImageOnePreviousMediaName, ImageTwoPreviousMediaName, ImageThreePreviousMediaName,
-                            ImageFourPreviousMediaName, ImageFivePreviousMediaName, ImageSixPreviousMediaName};
+            Image[] imageElements = { ImageOne, ImageTwo, ImageThree, ImageFour, ImageFive, ImageSix };
+            TextBlock[] imageElementTextNames = { ImageOneName, ImageTwoName, ImageThreeName,
+                            ImageFourName, ImageFiveName, ImageSixName};
             DirectoryInfo info = new DirectoryInfo(imagePath);
             FileInfo[] imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).ToArray();
-
-            var fileNames = GetPreviousMediaFileNames(filePath);
-
 
             if (imageFiles.Length == 7)
             {
                 File.Delete(previouslyPlayedImagesPath + "\\" + imageFiles[0].ToString());
-                File.Delete(filePath + "\\" + fileNames[0].ToString());
             }
+
             imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).Reverse().ToArray();
-            fileNames = fileNames.Reverse().ToArray();
+           
             for (var i = 0; i < imageFiles.Length; i++)
             {    
-                imageElementArray[i].Source = new BitmapImage(new Uri(previouslyPlayedImagesPath + "\\" + imageFiles[i].ToString()));
-                prevousMediaPlayXamlNames[i].Text = fileNames[i].ToString();
+                imageElements[i].Source = new BitmapImage(new Uri(previouslyPlayedImagesPath + "\\" + imageFiles[i].ToString()));
+                imageElementTextNames[i].Text = imageFiles[i].ToString().Substring(0, imageFiles[i].ToString().Length -4);
             }
         }
 
-        private FileInfo[] GetPreviousMediaFileNames(string path)
-        {
-            DirectoryInfo info = new DirectoryInfo(path);
-            FileInfo[] previousFileNames = info.GetFiles().OrderBy(file => file.CreationTime).ToArray();
-            return previousFileNames;
-        }
-
-        private void CreatePreviousMediaInfoFile(string mediaFile)
-        {
-
-            string mediaTitle = mediaFile.Substring(mediaFile.LastIndexOf("\\") + 1);
-            string mediaTitleInfoFile = previouslyPlayedFileInfoPath + "\\" + mediaTitle + ".txt";
 
 
-            if (!File.Exists(mediaTitleInfoFile))
-            {
-               
-                File.Create(mediaTitleInfoFile);
-
-            }
-
-            /*string path = @"E:\AppServ\Example.txt";
-if (!File.Exists(path))
-{
-    File.Create(path);
-    TextWriter tw = new StreamWriter(path);
-    tw.WriteLine("The very first line!");
-    tw.Close();
-}
-else if (File.Exists(path))
-{
-    TextWriter tw = new StreamWriter(path);
-    tw.WriteLine("The next line!");
-    tw.Close(); 
-}*/
-
-
-        }
+ 
 
 
 
@@ -154,6 +116,7 @@ else if (File.Exists(path))
             {
                 imageDirectory.Create();
             }
+            //this could be removed if no use found
             var pathToInfoFileDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//WPFMEDIA", "Info");
             previouslyPlayedFileInfoPath = pathToInfoFileDirectory.ToString();
             var infoDirectory = new DirectoryInfo(pathToInfoFileDirectory);
@@ -175,13 +138,14 @@ else if (File.Exists(path))
             JpegBitmapEncoder encoder = new JpegBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(bmp));
 
-           string previousImageName = Guid.NewGuid().ToString() + ".jpg";
+            
+            string previousImageName = mediaFile.Substring(mediaFile.LastIndexOf("\\") + 1) + ".jpg";
             FileStream fs = new FileStream(System.IO.Path.Combine(previouslyPlayedImagesPath,previousImageName), FileMode.Create);
            
             encoder.Save(fs);
            
             fs.Close();
-            CreatePreviousMediaInfoFile(mediaFile);
+
             imageSnapShotTimer.Stop();   
         }
 
@@ -298,7 +262,7 @@ else if (File.Exists(path))
             this.mediaDisplay.Visibility = Visibility.Collapsed;
             this.OpenMenu.Visibility = Visibility.Visible;
             timerDisplay.Stop();
-            AddImagesToView(previouslyPlayedImagesPath, previouslyPlayedFileInfoPath);
+            AddImagesToView(previouslyPlayedImagesPath);
         }
 
 
