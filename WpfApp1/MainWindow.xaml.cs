@@ -43,7 +43,6 @@ namespace WpfApp1
         string previouslyPlayedImagesPath;
         string previouslyPlayedFileInfoPath;
         List<string> previousMediaPlayImages = new List<string>();
-        Queue<string> mediaTitleCollection = new Queue<string>();
 
         public MainWindow()
         {
@@ -67,31 +66,78 @@ namespace WpfApp1
             imageSnapShotTimer.Tick += new EventHandler(TakeMediaImage_Ticker);
 
             CreateDirectories();
-            AddImagesToView(previouslyPlayedImagesPath);
+            AddImagesToView(previouslyPlayedImagesPath, previouslyPlayedFileInfoPath);
             
         }
 
 
-        private void AddImagesToView(string path)
+        private void AddImagesToView(string imagePath, string filePath)
         {
             
             Image[] imageElementArray = { ImageOne, ImageTwo, ImageThree, ImageFour, ImageFive, ImageSix };
-            DirectoryInfo info = new DirectoryInfo(path);
+            TextBlock[] prevousMediaPlayXamlNames = { ImageOnePreviousMediaName, ImageTwoPreviousMediaName, ImageThreePreviousMediaName,
+                            ImageFourPreviousMediaName, ImageFivePreviousMediaName, ImageSixPreviousMediaName};
+            DirectoryInfo info = new DirectoryInfo(imagePath);
             FileInfo[] imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).ToArray();
+
+            var fileNames = GetPreviousMediaFileNames(filePath);
+
 
             if (imageFiles.Length == 7)
             {
                 File.Delete(previouslyPlayedImagesPath + "\\" + imageFiles[0].ToString());
+                File.Delete(filePath + "\\" + fileNames[0].ToString());
             }
-
             imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).Reverse().ToArray();
+            fileNames = fileNames.Reverse().ToArray();
             for (var i = 0; i < imageFiles.Length; i++)
             {    
                 imageElementArray[i].Source = new BitmapImage(new Uri(previouslyPlayedImagesPath + "\\" + imageFiles[i].ToString()));
-                
+                prevousMediaPlayXamlNames[i].Text = fileNames[i].ToString();
             }
         }
-        
+
+        private FileInfo[] GetPreviousMediaFileNames(string path)
+        {
+            DirectoryInfo info = new DirectoryInfo(path);
+            FileInfo[] previousFileNames = info.GetFiles().OrderBy(file => file.CreationTime).ToArray();
+            return previousFileNames;
+        }
+
+        private void CreatePreviousMediaInfoFile(string mediaFile)
+        {
+
+            string mediaTitle = mediaFile.Substring(mediaFile.LastIndexOf("\\") + 1);
+            string mediaTitleInfoFile = previouslyPlayedFileInfoPath + "\\" + mediaTitle + ".txt";
+
+
+            if (!File.Exists(mediaTitleInfoFile))
+            {
+               
+                File.Create(mediaTitleInfoFile);
+
+            }
+
+            /*string path = @"E:\AppServ\Example.txt";
+if (!File.Exists(path))
+{
+    File.Create(path);
+    TextWriter tw = new StreamWriter(path);
+    tw.WriteLine("The very first line!");
+    tw.Close();
+}
+else if (File.Exists(path))
+{
+    TextWriter tw = new StreamWriter(path);
+    tw.WriteLine("The next line!");
+    tw.Close(); 
+}*/
+
+
+        }
+
+
+
         private void CreateDirectories()
         {
             var pathToRootMediaDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "WPFMEDIA");
@@ -118,41 +164,6 @@ namespace WpfApp1
             }
         }
 
-        private void AddMediaTitleToCollection(string mediaFile)
-        {
-            string mediaTitle = mediaFile.Substring(mediaFile.LastIndexOf("\\") + 1);
-            mediaTitleCollection.Enqueue(mediaTitle);
-            if(mediaTitleCollection.Count == 7)
-            {
-                mediaTitleCollection.Dequeue();
-            }
-            ImageOneMediaName.Text = mediaTitleCollection.ElementAt(0);
-
-
-            string mediaTitleInfo = previouslyPlayedFileInfoPath + "\\" + mediaTitle + ".txt";
-
-            /*string path = @"E:\AppServ\Example.txt";
-if (!File.Exists(path))
-{
-    File.Create(path);
-    TextWriter tw = new StreamWriter(path);
-    tw.WriteLine("The very first line!");
-    tw.Close();
-}
-else if (File.Exists(path))
-{
-    TextWriter tw = new StreamWriter(path);
-    tw.WriteLine("The next line!");
-    tw.Close(); 
-}*/
-
-            if(!File.Exists(mediaTitleInfo))
-            {
-                MessageBox.Show(mediaTitleInfo);
-                File.Create(mediaTitleInfo);
-                
-            }
-        }
 
         private void TakeMediaImage_Ticker(object sender, EventArgs e)
         {
@@ -170,7 +181,7 @@ else if (File.Exists(path))
             encoder.Save(fs);
            
             fs.Close();
-            AddMediaTitleToCollection(mediaFile);
+            CreatePreviousMediaInfoFile(mediaFile);
             imageSnapShotTimer.Stop();   
         }
 
@@ -287,7 +298,7 @@ else if (File.Exists(path))
             this.mediaDisplay.Visibility = Visibility.Collapsed;
             this.OpenMenu.Visibility = Visibility.Visible;
             timerDisplay.Stop();
-            AddImagesToView(previouslyPlayedImagesPath);
+            AddImagesToView(previouslyPlayedImagesPath, previouslyPlayedFileInfoPath);
         }
 
 
