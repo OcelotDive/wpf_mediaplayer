@@ -127,6 +127,31 @@ namespace WpfApp1
                 mediaTitleCollection.Dequeue();
             }
             ImageOneMediaName.Text = mediaTitleCollection.ElementAt(0);
+
+
+            string mediaTitleInfo = previouslyPlayedFileInfoPath + "\\" + mediaTitle + ".txt";
+
+            /*string path = @"E:\AppServ\Example.txt";
+if (!File.Exists(path))
+{
+    File.Create(path);
+    TextWriter tw = new StreamWriter(path);
+    tw.WriteLine("The very first line!");
+    tw.Close();
+}
+else if (File.Exists(path))
+{
+    TextWriter tw = new StreamWriter(path);
+    tw.WriteLine("The next line!");
+    tw.Close(); 
+}*/
+
+            if(!File.Exists(mediaTitleInfo))
+            {
+                MessageBox.Show(mediaTitleInfo);
+                File.Create(mediaTitleInfo);
+                
+            }
         }
 
         private void TakeMediaImage_Ticker(object sender, EventArgs e)
@@ -262,6 +287,7 @@ namespace WpfApp1
             this.mediaDisplay.Visibility = Visibility.Collapsed;
             this.OpenMenu.Visibility = Visibility.Visible;
             timerDisplay.Stop();
+            AddImagesToView(previouslyPlayedImagesPath);
         }
 
 
