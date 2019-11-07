@@ -42,8 +42,7 @@ namespace WpfApp1
         //string previousImageName;
         string previouslyPlayedImagesPath;
         string previouslyPlayedFileInfoPath;
-        List<string> previousMediaPlayImages = new List<string>();
-
+        List<string> previousMediaPlayImages = new List<string>(); 
         public MainWindow()
         {
 
@@ -127,6 +126,38 @@ namespace WpfApp1
             }
         }
 
+        private void AddMediaTitleToCollection(string mediaFile)
+        {
+            string mediaTitle = mediaFile.Substring(0);
+          
+
+
+            string mediaTitleInfo = previouslyPlayedFileInfoPath + "\\lastPlays.txt";
+
+
+            if (!File.Exists(mediaTitleInfo))
+            {
+             File.Create(mediaTitleInfo);
+                using (System.IO.StreamWriter sw = new System.IO.StreamWriter(mediaTitleInfo, true))
+              
+              sw.WriteLine(mediaTitle);
+               
+   
+            }
+            else if (File.Exists(mediaTitleInfo))
+            {
+                using (System.IO.StreamWriter sw = new System.IO.StreamWriter(mediaTitleInfo, true))
+
+                    sw.WriteLine(mediaTitle);
+
+            
+            }
+
+         
+        }
+
+
+
 
         private void TakeMediaImage_Ticker(object sender, EventArgs e)
         {
@@ -138,7 +169,9 @@ namespace WpfApp1
             JpegBitmapEncoder encoder = new JpegBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(bmp));
 
-            
+         
+            AddMediaTitleToCollection(mediaFile);
+           
             string previousImageName = mediaFile.Substring(mediaFile.LastIndexOf("\\") + 1) + ".jpg";
             FileStream fs = new FileStream(System.IO.Path.Combine(previouslyPlayedImagesPath,previousImageName), FileMode.Create);
            
@@ -148,6 +181,7 @@ namespace WpfApp1
 
             imageSnapShotTimer.Stop();   
         }
+
 
         private void MouseStop_Ticker(object sender, EventArgs e)
         {
