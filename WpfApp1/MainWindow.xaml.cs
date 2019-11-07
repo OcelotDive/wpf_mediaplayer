@@ -71,16 +71,22 @@ namespace WpfApp1
 
 
         private void AddImagesToView(string imagePath)
-        {
-            
+        { 
             Image[] imageElements = { ImageOne, ImageTwo, ImageThree, ImageFour, ImageFive, ImageSix };
+            
             TextBlock[] imageElementTextNames = { ImageOneName, ImageTwoName, ImageThreeName,
-                            ImageFourName, ImageFiveName, ImageSixName};
+                                                  ImageFourName, ImageFiveName, ImageSixName};
+
+      
+
             DirectoryInfo info = new DirectoryInfo(imagePath);
             FileInfo[] imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).ToArray();
 
+           
+
             if (imageFiles.Length == 7)
             {
+               
                 File.Delete(previouslyPlayedImagesPath + "\\" + imageFiles[0].ToString());
             }
 
@@ -94,8 +100,7 @@ namespace WpfApp1
         }
 
 
-
- 
+        
 
 
 
@@ -123,37 +128,29 @@ namespace WpfApp1
             if (!infoDirectory.Exists)
             {
                 infoDirectory.Create();
+                string mediaTitleInfoFile = previouslyPlayedFileInfoPath + "\\lastPlays.txt";
+                File.Create(mediaTitleInfoFile);
             }
         }
 
-        private void AddMediaTitleToCollection(string mediaFile)
+        private void SaveMediaTitleToFile(string mediaFile)
         {
             string mediaTitle = mediaFile.Substring(0);
-          
+            string mediaTitleInfoFile = previouslyPlayedFileInfoPath + "\\lastPlays.txt";
 
-
-            string mediaTitleInfo = previouslyPlayedFileInfoPath + "\\lastPlays.txt";
-
-
-            if (!File.Exists(mediaTitleInfo))
+            if (!File.Exists(mediaTitleInfoFile))
             {
-             File.Create(mediaTitleInfo);
-                using (System.IO.StreamWriter sw = new System.IO.StreamWriter(mediaTitleInfo, true))
-              
-              sw.WriteLine(mediaTitle);
+             File.Create(mediaTitleInfoFile);
+             using (System.IO.StreamWriter sw = new System.IO.StreamWriter(mediaTitleInfoFile, true))
+             sw.WriteLine(mediaTitle);
                
    
             }
-            else if (File.Exists(mediaTitleInfo))
+            else if (File.Exists(mediaTitleInfoFile))
             {
-                using (System.IO.StreamWriter sw = new System.IO.StreamWriter(mediaTitleInfo, true))
-
-                    sw.WriteLine(mediaTitle);
-
-            
-            }
-
-         
+                using (System.IO.StreamWriter sw = new System.IO.StreamWriter(mediaTitleInfoFile, true))
+                sw.WriteLine(mediaTitle); 
+            } 
         }
 
 
@@ -170,7 +167,7 @@ namespace WpfApp1
             encoder.Frames.Add(BitmapFrame.Create(bmp));
 
          
-            AddMediaTitleToCollection(mediaFile);
+            SaveMediaTitleToFile(mediaFile);
            
             string previousImageName = mediaFile.Substring(mediaFile.LastIndexOf("\\") + 1) + ".jpg";
             FileStream fs = new FileStream(System.IO.Path.Combine(previouslyPlayedImagesPath,previousImageName), FileMode.Create);
