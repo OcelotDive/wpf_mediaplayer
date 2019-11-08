@@ -41,11 +41,10 @@ namespace WpfApp1
         TimeSpan mediaDuration;
         //string previousImageName;
         string previouslyPlayedImagesPath;
-        string previouslyPlayedFileInfoPath;
-        List<string> previousMediaPlayImages = new List<string>(); 
+        string previouslyPlayedFileDirectoryPath;
+ 
         public MainWindow()
         {
-
             InitializeComponent();
             mediaScrubberTimer = new DispatcherTimer();
             mediaScrubberTimer.Interval = TimeSpan.FromMilliseconds(200);
@@ -54,7 +53,7 @@ namespace WpfApp1
             timerDisplay = new DispatcherTimer();
             timerDisplay.Interval = TimeSpan.FromMilliseconds(1000);
             timerDisplay.Tick += new EventHandler(DisplayTime_Ticker);
-
+  
             mouseLeftDownTimer = new DispatcherTimer();
             mouseLeftDownTimer.Interval = TimeSpan.FromMilliseconds(200);
 
@@ -64,11 +63,59 @@ namespace WpfApp1
             imageSnapShotTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(5) };
             imageSnapShotTimer.Tick += new EventHandler(TakeMediaImage_Ticker);
 
-            CreateDirectories();
+            BootStrapMediaPlayer();
             AddImagesToView(previouslyPlayedImagesPath);
            
             
         }
+
+        private void BootStrapMediaPlayer()
+        {
+            CreateAppRootDirectory();
+            CreateScreenDumpDirectory();
+            CreateFileInfoDirectory();
+            CreateMediaTitleFile();
+        }
+
+        private void CreateAppRootDirectory()
+        {
+            var pathToRootMediaDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "WPFMEDIA");
+            var rootDirectory = new DirectoryInfo(pathToRootMediaDirectory);
+            if (!rootDirectory.Exists)
+                rootDirectory.Create();
+        }
+
+        private void CreateScreenDumpDirectory()
+        {
+            var pathToImagesDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//WPFMEDIA", "Screendumps");
+            previouslyPlayedImagesPath = pathToImagesDirectory.ToString();
+            var imageDirectory = new DirectoryInfo(pathToImagesDirectory);
+            if (!imageDirectory.Exists)
+                imageDirectory.Create();
+        }
+
+        private void CreateFileInfoDirectory()
+        {
+            var pathToInfoFileDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//WPFMEDIA", "Info");
+            previouslyPlayedFileDirectoryPath = pathToInfoFileDirectory.ToString();
+            var infoDirectory = new DirectoryInfo(pathToInfoFileDirectory);
+
+            if (!infoDirectory.Exists)
+            {
+                infoDirectory.Create();
+                string mediaTitleInfoFile = previouslyPlayedFileDirectoryPath + "\\lastPlays.txt";
+                File.Create(mediaTitleInfoFile);
+            }
+        }
+
+        private void CreateMediaTitleFile()
+        {
+            string mediaTitleInfoFile = previouslyPlayedFileDirectoryPath + "\\lastPlays.txt";
+            if (!File.Exists(mediaTitleInfoFile))
+                File.Create(mediaTitleInfoFile);
+        }
+
+       
 
         public static ImageSource BitmapFromUri(Uri source)
         {
@@ -83,7 +130,6 @@ namespace WpfApp1
 
         private void AddImagesToView(string imagePath)
         {
-            
             Image[] imageElements = { ImageOne, ImageTwo, ImageThree, ImageFour, ImageFive, ImageSix };
             TextBlock[] imageElementTextNames = { ImageOneName, ImageTwoName, ImageThreeName,
                                                   ImageFourName, ImageFiveName, ImageSixName};
@@ -108,59 +154,11 @@ namespace WpfApp1
             return imageFiles;
         }
         
+      
 
+     
 
-
-        private void CreateDirectories()
-        {
-            var pathToRootMediaDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "WPFMEDIA");
-            var rootDirectory = new DirectoryInfo(pathToRootMediaDirectory);
-            if(!rootDirectory.Exists)
-            {
-                rootDirectory.Create();
-            }
-            var pathToImagesDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//WPFMEDIA", "Screendumps");
-            previouslyPlayedImagesPath = pathToImagesDirectory.ToString();
-            var imageDirectory = new DirectoryInfo(pathToImagesDirectory);
-
-            if (!imageDirectory.Exists)
-            {
-                imageDirectory.Create();
-            }
-            //this could be removed if no use found
-            var pathToInfoFileDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//WPFMEDIA", "Info");
-            previouslyPlayedFileInfoPath = pathToInfoFileDirectory.ToString();
-            var infoDirectory = new DirectoryInfo(pathToInfoFileDirectory);
-
-            if (!infoDirectory.Exists)
-            {
-                infoDirectory.Create();
-                string mediaTitleInfoFile = previouslyPlayedFileInfoPath + "\\lastPlays.txt";
-                File.Create(mediaTitleInfoFile);
-            }
-        }
-
-        private void SaveMediaTitleToFile(string mediaFile)
-        {
-            string mediaTitle = mediaFile.Substring(0);
-            string mediaTitleInfoFile = previouslyPlayedFileInfoPath + "\\lastPlays.txt";
-
-            if (!File.Exists(mediaTitleInfoFile))
-            {
-             File.Create(mediaTitleInfoFile);
-             using (System.IO.StreamWriter sw = new System.IO.StreamWriter(mediaTitleInfoFile, true))
-             sw.WriteLine(mediaTitle);
-               
-   
-            }
-            else if (File.Exists(mediaTitleInfoFile))
-            {
-                using (System.IO.StreamWriter sw = new System.IO.StreamWriter(mediaTitleInfoFile, true))
-                sw.WriteLine(mediaTitle); 
-            } 
-        }
-
-
+        
 
 
         private void TakeMediaImage_Ticker(object sender, EventArgs e)
@@ -174,16 +172,34 @@ namespace WpfApp1
             encoder.Frames.Add(BitmapFrame.Create(bmp));
 
          
-            SaveMediaTitleToFile(mediaFile);
+            
            
             string previousImageName = mediaFile.Substring(mediaFile.LastIndexOf("\\") + 1) + ".jpg";
             FileStream fs = new FileStream(System.IO.Path.Combine(previouslyPlayedImagesPath,previousImageName), FileMode.Create);
-           
             encoder.Save(fs);
-           
             fs.Close();
+            imageSnapShotTimer.Stop();
+            SaveMediaTitleToFile(mediaFile);
+        }
 
-            imageSnapShotTimer.Stop();   
+
+        private void SaveMediaTitleToFile(string mediaFile)
+        {
+            string mediaTitle = mediaFile.Substring(0);
+            string mediaTitleInfoFile = previouslyPlayedFileDirectoryPath + "\\lastPlays.txt";
+
+            /* if (!File.Exists(mediaTitleInfoFile))
+             {
+              File.Create(mediaTitleInfoFile);
+              using (System.IO.StreamWriter sw = new System.IO.StreamWriter(mediaTitleInfoFile, true))
+              sw.WriteLine(mediaTitle);
+
+
+             }*/
+
+            using (System.IO.StreamWriter sw = new System.IO.StreamWriter(mediaTitleInfoFile, true))
+                sw.WriteLine(mediaTitle);
+
         }
 
 
