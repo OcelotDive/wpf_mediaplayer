@@ -167,12 +167,12 @@ namespace WpfApp1
             string previousImageName = mediaFile.Substring(mediaFile.LastIndexOf("\\") + 1) + ".jpg";
 
 
-         
+            SaveMediaTitleToFile(mediaFile);
             FileStream fs = new FileStream(System.IO.Path.Combine(previouslyPlayedImagesPath,previousImageName), FileMode.Create);
             encoder.Save(fs);
             fs.Close();
             imageSnapShotTimer.Stop();
-            SaveMediaTitleToFile(mediaFile);
+            
         }
 
 
@@ -181,14 +181,7 @@ namespace WpfApp1
             string mediaTitle = mediaFile.Substring(0);
             string mediaTitleInfoFile = previouslyPlayedFileDirectoryPath + "\\lastPlays.txt";
 
-            /* if (!File.Exists(mediaTitleInfoFile))
-             {
-              File.Create(mediaTitleInfoFile);
-              using (System.IO.StreamWriter sw = new System.IO.StreamWriter(mediaTitleInfoFile, true))
-              sw.WriteLine(mediaTitle);
-
-
-             }*/
+      
 
             using (System.IO.StreamWriter sw = new System.IO.StreamWriter(mediaTitleInfoFile, true))
                 sw.WriteLine(mediaTitle);
@@ -241,8 +234,8 @@ namespace WpfApp1
             openFileDialog.ShowDialog();
             if (openFileDialog.FileName != "")
             {
-                mediaFile = openFileDialog.FileName;
-               
+                mediaFile = openFileDialog.FileName.ToString();
+           
                 PlayMedia(mediaFile);
 
                 // string mediaDuration = GetMediaDuration(mediaFile).ToString().Substring(0, GetMediaDuration(mediaFile).ToString().LastIndexOf("."));
@@ -273,7 +266,7 @@ namespace WpfApp1
 
         private static TimeSpan GetMediaDuration(string mediaFile)
         {
-           
+ 
             using (var shell = ShellObject.FromParsingName(mediaFile))
             {
                 IShellProperty prop = shell.Properties.System.Media.Duration;
@@ -500,17 +493,24 @@ namespace WpfApp1
             Button clickedButton = sender as Button;
             string name = clickedButton.Name.ToString();
             char lastChar = name[name.Length - 1];
-            int buttonIndex = int.Parse(lastChar.ToString()) -1;
-            var replayMediaFile = GetLastPlays()[buttonIndex];
-            mediaFile = replayMediaFile;
+            int buttonIndex = int.Parse(lastChar.ToString());
+     
+            
+            var replayMediaFile = GetLastPlays();
+
+            mediaFile = replayMediaFile[1];
+      
             PlayMedia(mediaFile);
         }
 
         private List<string> GetLastPlays()
         {
             string textFile = File.ReadAllText(previouslyPlayedFileDirectoryPath + "\\lastPlays.txt");
+            MessageBox.Show(textFile);
             string[] all = textFile.Trim().Split('\n');
-            List<string> noDuplicates = all.Reverse().Distinct().ToList<string>();
+            List<string> noDuplicates = all.Reverse().ToList<string>();
+         
+        
             return noDuplicates;
         }
     }
