@@ -85,17 +85,9 @@ namespace WpfApp1
         {
             
             Image[] imageElements = { ImageOne, ImageTwo, ImageThree, ImageFour, ImageFive, ImageSix };
-            
             TextBlock[] imageElementTextNames = { ImageOneName, ImageTwoName, ImageThreeName,
                                                   ImageFourName, ImageFiveName, ImageSixName};
-
-            DirectoryInfo info = new DirectoryInfo(imagePath);
-            FileInfo[] imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).ToArray();
-
-            if (imageFiles.Length == 7)
-                 File.Delete(previouslyPlayedImagesPath + "\\" + imageFiles[0].ToString());
-            
-            imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).Reverse().ToArray();
+            var imageFiles = RemoveOldestImageGetRemainder(imagePath);
            
             for (var i = 0; i < imageFiles.Length; i++)
             {    
@@ -104,7 +96,17 @@ namespace WpfApp1
             }
         }
 
+        private FileInfo[] RemoveOldestImageGetRemainder(string imagePath)
+        {
+            DirectoryInfo info = new DirectoryInfo(imagePath);
+            FileInfo[] imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).ToArray();
 
+            if (imageFiles.Length == 7)
+                File.Delete(previouslyPlayedImagesPath + "\\" + imageFiles[0].ToString());
+
+            imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).Reverse().ToArray();
+            return imageFiles;
+        }
         
 
 
