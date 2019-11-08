@@ -66,35 +66,40 @@ namespace WpfApp1
 
             CreateDirectories();
             AddImagesToView(previouslyPlayedImagesPath);
+           
             
+        }
+
+        public static ImageSource BitmapFromUri(Uri source)
+        {
+            var bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = source;
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.EndInit();
+            return bitmap;
         }
 
 
         private void AddImagesToView(string imagePath)
-        { 
+        {
+            
             Image[] imageElements = { ImageOne, ImageTwo, ImageThree, ImageFour, ImageFive, ImageSix };
             
             TextBlock[] imageElementTextNames = { ImageOneName, ImageTwoName, ImageThreeName,
                                                   ImageFourName, ImageFiveName, ImageSixName};
 
-      
-
             DirectoryInfo info = new DirectoryInfo(imagePath);
             FileInfo[] imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).ToArray();
 
-           
-
             if (imageFiles.Length == 7)
-            {
-               
-                File.Delete(previouslyPlayedImagesPath + "\\" + imageFiles[0].ToString());
-            }
-
+                 File.Delete(previouslyPlayedImagesPath + "\\" + imageFiles[0].ToString());
+            
             imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).Reverse().ToArray();
            
             for (var i = 0; i < imageFiles.Length; i++)
             {    
-                imageElements[i].Source = new BitmapImage(new Uri(previouslyPlayedImagesPath + "\\" + imageFiles[i].ToString()));
+                imageElements[i].Source = BitmapFromUri(new Uri(previouslyPlayedImagesPath + "\\" + imageFiles[i].ToString()));
                 imageElementTextNames[i].Text = imageFiles[i].ToString().Substring(0, imageFiles[i].ToString().Length -4);
             }
         }
