@@ -416,7 +416,7 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <Button Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
+                                <Button x:Name="ImageButton1" Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Click="PlayDisplayedMedia">
                                     <materialDesign:PackIcon Kind="PlayOutline" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FFFBFBFB" Height="40" Width="40" Grid.Row="0"/>
                                 </Button>
                             </Grid>
@@ -435,7 +435,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Button Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
+                            <Button x:Name="ImageButton2" Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
                                 <materialDesign:PackIcon Kind="PlayOutline" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FFFBFBFB" Height="40" Width="40" Grid.Row="0"/>
                             </Button>
                         </Grid>
@@ -454,7 +454,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Button Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
+                            <Button x:Name="ImageButton3" Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
                                 <materialDesign:PackIcon Kind="PlayOutline" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FFFBFBFB" Height="40" Width="40" Grid.Row="0"/>
                             </Button>
                         </Grid>
@@ -473,7 +473,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Button Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
+                            <Button x:Name="ImageButton4" Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
                                 <materialDesign:PackIcon Kind="PlayOutline" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FFFBFBFB" Height="40" Width="40" Grid.Row="0"/>
                             </Button>
                         </Grid>
@@ -492,7 +492,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Button Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
+                            <Button x:Name="ImageButton5" Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
                                 <materialDesign:PackIcon Kind="PlayOutline" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FFFBFBFB" Height="40" Width="40" Grid.Row="0"/>
                             </Button>
                         </Grid>
@@ -510,7 +510,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Button Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
+                            <Button x:Name="ImageButton6" Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
                                 <materialDesign:PackIcon Kind="PlayOutline" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FFFBFBFB" Height="40" Width="40" Grid.Row="0"/>
                             </Button>
                         </Grid>

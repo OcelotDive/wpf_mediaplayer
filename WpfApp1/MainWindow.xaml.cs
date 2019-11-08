@@ -65,7 +65,7 @@ namespace WpfApp1
 
             BootStrapMediaPlayer();
             AddImagesToView(previouslyPlayedImagesPath);
-           
+            
             
         }
 
@@ -87,7 +87,7 @@ namespace WpfApp1
 
         private void CreateScreenDumpDirectory()
         {
-            var pathToImagesDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//WPFMEDIA", "Screendumps");
+            var pathToImagesDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\WPFMEDIA", "Screendumps");
             previouslyPlayedImagesPath = pathToImagesDirectory.ToString();
             var imageDirectory = new DirectoryInfo(pathToImagesDirectory);
             if (!imageDirectory.Exists)
@@ -96,7 +96,7 @@ namespace WpfApp1
 
         private void CreateFileInfoDirectory()
         {
-            var pathToInfoFileDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//WPFMEDIA", "Info");
+            var pathToInfoFileDirectory = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\WPFMEDIA", "Info");
             previouslyPlayedFileDirectoryPath = pathToInfoFileDirectory.ToString();
             var infoDirectory = new DirectoryInfo(pathToInfoFileDirectory);
 
@@ -115,8 +115,6 @@ namespace WpfApp1
                 File.Create(mediaTitleInfoFile);
         }
 
-       
-
         public static ImageSource BitmapFromUri(Uri source)
         {
             var bitmap = new BitmapImage();
@@ -127,6 +125,7 @@ namespace WpfApp1
             return bitmap;
         }
 
+        
 
         private void AddImagesToView(string imagePath)
         {
@@ -145,21 +144,15 @@ namespace WpfApp1
         private FileInfo[] RemoveOldestImageGetRemainder(string imagePath)
         {
             DirectoryInfo info = new DirectoryInfo(imagePath);
-            FileInfo[] imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).ToArray();
+            FileInfo[] imageFiles = info.GetFiles().OrderBy(file => file.LastWriteTime).ToArray();
 
             if (imageFiles.Length == 7)
                 File.Delete(previouslyPlayedImagesPath + "\\" + imageFiles[0].ToString());
 
-            imageFiles = info.GetFiles().OrderBy(file => file.CreationTime).Reverse().ToArray();
+            imageFiles = info.GetFiles().OrderBy(file => file.LastWriteTime).Reverse().ToArray();
             return imageFiles;
         }
         
-      
-
-     
-
-        
-
 
         private void TakeMediaImage_Ticker(object sender, EventArgs e)
         {
@@ -171,10 +164,10 @@ namespace WpfApp1
             JpegBitmapEncoder encoder = new JpegBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(bmp));
 
-         
-            
-           
             string previousImageName = mediaFile.Substring(mediaFile.LastIndexOf("\\") + 1) + ".jpg";
+
+
+         
             FileStream fs = new FileStream(System.IO.Path.Combine(previouslyPlayedImagesPath,previousImageName), FileMode.Create);
             encoder.Save(fs);
             fs.Close();
@@ -249,6 +242,7 @@ namespace WpfApp1
             if (openFileDialog.FileName != "")
             {
                 mediaFile = openFileDialog.FileName;
+               
                 PlayMedia(mediaFile);
 
                 // string mediaDuration = GetMediaDuration(mediaFile).ToString().Substring(0, GetMediaDuration(mediaFile).ToString().LastIndexOf("."));
@@ -258,12 +252,12 @@ namespace WpfApp1
 
         private void PlayMedia(string mediaFile)
         {
-            this.MediaPlayer.Source = new Uri(mediaFile);
+            MediaPlayer.Source = new Uri(mediaFile);
 
-            this.OpenMenu.Visibility = Visibility.Collapsed;
+            OpenMenu.Visibility = Visibility.Collapsed;
 
-            this.mediaDisplay.Visibility = Visibility.Visible;
-            this.MediaPlayer.Play();
+            mediaDisplay.Visibility = Visibility.Visible;
+            MediaPlayer.Play();
 
             mediaDuration = GetMediaDuration(mediaFile);
 
@@ -279,10 +273,12 @@ namespace WpfApp1
 
         private static TimeSpan GetMediaDuration(string mediaFile)
         {
+           
             using (var shell = ShellObject.FromParsingName(mediaFile))
             {
                 IShellProperty prop = shell.Properties.System.Media.Duration;
                 var t = (ulong)prop.ValueAsObject;
+                // need to handle this error
                 return TimeSpan.FromTicks((long)t);
             }
         }
@@ -499,6 +495,23 @@ namespace WpfApp1
            detectMouseStopTimer.Start();   
         }
 
-      
+        private void PlayDisplayedMedia(object sender, RoutedEventArgs e)
+        {
+            Button clickedButton = sender as Button;
+            string name = clickedButton.Name.ToString();
+            char lastChar = name[name.Length - 1];
+            int buttonIndex = int.Parse(lastChar.ToString()) -1;
+            var replayMediaFile = GetLastPlays()[buttonIndex];
+            mediaFile = replayMediaFile;
+            PlayMedia(mediaFile);
+        }
+
+        private List<string> GetLastPlays()
+        {
+            string textFile = File.ReadAllText(previouslyPlayedFileDirectoryPath + "\\lastPlays.txt");
+            string[] all = textFile.Trim().Split('\n');
+            List<string> noDuplicates = all.Reverse().Distinct().ToList<string>();
+            return noDuplicates;
+        }
     }
 }
