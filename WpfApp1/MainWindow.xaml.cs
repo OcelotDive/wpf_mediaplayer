@@ -494,23 +494,18 @@ namespace WpfApp1
             string name = clickedButton.Name.ToString();
             char lastChar = name[name.Length - 1];
             int buttonIndex = int.Parse(lastChar.ToString());
-     
-            
             var replayMediaFile = GetLastPlays();
 
-            mediaFile = replayMediaFile[1];
-      
+            mediaFile = replayMediaFile[buttonIndex -1].Trim();
             PlayMedia(mediaFile);
         }
 
         private List<string> GetLastPlays()
         {
             string textFile = File.ReadAllText(previouslyPlayedFileDirectoryPath + "\\lastPlays.txt");
-            MessageBox.Show(textFile);
             string[] all = textFile.Trim().Split('\n');
-            List<string> noDuplicates = all.Reverse().ToList<string>();
-         
-        
+            List<string> noDuplicates = all.Distinct().Reverse().ToList<string>();
+ 
             return noDuplicates;
         }
     }
