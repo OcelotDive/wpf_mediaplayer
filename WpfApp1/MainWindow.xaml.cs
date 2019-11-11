@@ -496,7 +496,7 @@ namespace WpfApp1
             int buttonIndex = int.Parse(lastChar.ToString());
             var replayMediaFile = GetLastPlays();
 
-            mediaFile = replayMediaFile[buttonIndex -1].Trim();
+            mediaFile = replayMediaFile[buttonIndex -1].TrimEnd(new char[]{ '\r', '\n'});
             PlayMedia(mediaFile);
         }
 
@@ -504,8 +504,13 @@ namespace WpfApp1
         {
             string textFile = File.ReadAllText(previouslyPlayedFileDirectoryPath + "\\lastPlays.txt");
             string[] all = textFile.Trim().Split('\n');
-            List<string> noDuplicates = all.Distinct().Reverse().ToList<string>();
- 
+            List<string> noDuplicates = all.Reverse().Distinct().ToList<string>();
+            for(var i = 0; i < noDuplicates.Count; i++)
+            {
+                noDuplicates[i] = noDuplicates[i].Trim(new char[] { '\r', '\n' });
+                MessageBox.Show(noDuplicates[i]);
+                MessageBox.Show(noDuplicates[i][noDuplicates[i].Length - 1].ToString());
+            }
             return noDuplicates;
         }
     }
