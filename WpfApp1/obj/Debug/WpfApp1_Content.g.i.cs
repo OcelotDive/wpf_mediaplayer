@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/router1.avi")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/wpfmedia.png")]
 
 

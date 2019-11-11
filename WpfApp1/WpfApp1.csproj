@@ -128,14 +128,10 @@
     <Resource Include="Assets\back.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\das.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\landscape.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\Blank.PNG" />
-    <Content Include="Assets\router1.avi" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\WPFMEDIA.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
