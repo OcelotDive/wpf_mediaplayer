@@ -170,9 +170,16 @@ namespace WpfApp1
             
             FileStream fs = new FileStream(System.IO.Path.Combine(previouslyPlayedImagesPath,previousImageName), FileMode.Create);
             encoder.Save(fs);
+        
             fs.Close();
+            fs = null;
+            if (fs == null)
+            {
+                SaveMediaTitleToFile(mediaFile);
+                AddImagesToView(previouslyPlayedImagesPath);
+            }
             imageSnapShotTimer.Stop();
-            SaveMediaTitleToFile(mediaFile);
+            
         }
 
 
@@ -305,7 +312,7 @@ namespace WpfApp1
             this.mediaDisplay.Visibility = Visibility.Collapsed;
             this.OpenMenu.Visibility = Visibility.Visible;
             timerDisplay.Stop();
-            AddImagesToView(previouslyPlayedImagesPath);
+            
         }
 
 
@@ -515,10 +522,10 @@ namespace WpfApp1
             foreach(var str in noDuplicates)
             {
                 MessageBox.Show(str);
-                MessageBox.Show(str[str.Length - 1].ToString());
+           
             }
 
-            return noDuplicates;
+            return noDuplicates.Take(6).ToList();
         }
     }
 }
