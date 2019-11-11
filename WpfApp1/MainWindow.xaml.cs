@@ -167,12 +167,12 @@ namespace WpfApp1
             string previousImageName = mediaFile.Substring(mediaFile.LastIndexOf("\\") + 1) + ".jpg";
 
 
-            SaveMediaTitleToFile(mediaFile);
+            
             FileStream fs = new FileStream(System.IO.Path.Combine(previouslyPlayedImagesPath,previousImageName), FileMode.Create);
             encoder.Save(fs);
             fs.Close();
             imageSnapShotTimer.Stop();
-            
+            SaveMediaTitleToFile(mediaFile);
         }
 
 
@@ -496,7 +496,7 @@ namespace WpfApp1
             int buttonIndex = int.Parse(lastChar.ToString());
             var replayMediaFile = GetLastPlays();
 
-            mediaFile = replayMediaFile[buttonIndex -1].TrimEnd(new char[]{ '\r', '\n'});
+            mediaFile = replayMediaFile[buttonIndex -1];
             PlayMedia(mediaFile);
         }
 
@@ -504,13 +504,20 @@ namespace WpfApp1
         {
             string textFile = File.ReadAllText(previouslyPlayedFileDirectoryPath + "\\lastPlays.txt");
             string[] all = textFile.Trim().Split('\n');
-            List<string> noDuplicates = all.Reverse().Distinct().ToList<string>();
-            for(var i = 0; i < noDuplicates.Count; i++)
+          
+            for(var i = 0; i < all.Length; i++)
             {
-                noDuplicates[i] = noDuplicates[i].Trim(new char[] { '\r', '\n' });
-                MessageBox.Show(noDuplicates[i]);
-                MessageBox.Show(noDuplicates[i][noDuplicates[i].Length - 1].ToString());
+                all[i] = all[i].Trim(new char[] { '\r', '\n' });
+               // MessageBox.Show(all[i]);
+              //  MessageBox.Show(all[i][all[i].Length - 1].ToString());
             }
+            List<string> noDuplicates = all.Reverse().Distinct().ToList<string>();
+            foreach(var str in noDuplicates)
+            {
+                MessageBox.Show(str);
+                MessageBox.Show(str[str.Length - 1].ToString());
+            }
+
             return noDuplicates;
         }
     }
