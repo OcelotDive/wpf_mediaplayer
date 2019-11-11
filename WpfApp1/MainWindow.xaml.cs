@@ -527,5 +527,10 @@ namespace WpfApp1
 
             return noDuplicates.Take(6).ToList();
         }
+
+        private void HandleAboutClick(object sender, MouseButtonEventArgs e)
+        {
+           
+        }
     }
 }

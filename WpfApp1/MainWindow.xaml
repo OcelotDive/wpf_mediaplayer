@@ -140,6 +140,18 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:4.5" Value="-800"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
+        <Storyboard x:Key="About">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="AboutPanel">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1050"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="250"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="About_Copy1">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="AboutPanel">
+                <SplineDoubleKeyFrame KeyTime="0" Value="250"/>
+                <SplineDoubleKeyFrame KeyTime="0:0:0.5" Value="1050"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
     </Window.Resources>
     <Window.Triggers>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonOpenMenu">
@@ -166,6 +178,9 @@
         </EventTrigger>
         <EventTrigger RoutedEvent="FrameworkElement.Loaded">
             <BeginStoryboard x:Name="AutoFadeControls_BeginStoryboard1" Storyboard="{StaticResource AutoFadeControls}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="UIElement.MouseLeftButtonDown" SourceName="stackPanel1">
+            <BeginStoryboard x:Name="About_BeginStoryboard1" Storyboard="{StaticResource About}"/>
         </EventTrigger>
     </Window.Triggers>
 
@@ -196,6 +211,16 @@
             </Image>
 
         </Grid>
+        <StackPanel x:Name="AboutPanel" Background="#FFFBFBFB"   Width="auto"  Panel.ZIndex="8" RenderTransformOrigin="0.5,0.5">
+            <StackPanel.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform X="1050" Y="50"/>
+                </TransformGroup>
+            </StackPanel.RenderTransform>
+        </StackPanel>
         <StackPanel x:Name="MenuPanel" Width="auto" HorizontalAlignment="Left" Margin="-250 0 0 0" RenderTransformOrigin="0.5,0.5">
             <StackPanel.RenderTransform>
                 <TransformGroup>
@@ -250,7 +275,8 @@
                         <TextBlock Text="Open Disc" VerticalAlignment="Center" Margin="20 0"/>
                     </StackPanel>
                 </ListViewItem>
-                <ListViewItem x:Name="listViewItem2" Height="60" RenderTransformOrigin="0.5,0.5">
+
+                <ListViewItem x:Name="listViewItem2" Height="60" RenderTransformOrigin="0.5,0.5" PreviewMouseLeftButtonDown="HandleAboutClick">
                     <ListViewItem.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -259,7 +285,7 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
-                    <StackPanel Orientation="Horizontal" Margin="10 0">
+                    <StackPanel x:Name="stackPanel1" Orientation="Horizontal" Margin="10 0">
                         <materialDesign:PackIcon Kind="About" Width="41" Height="410" VerticalAlignment="Center" Margin="4" />
                         <TextBlock Text="About" VerticalAlignment="Center" Margin="20 0"/>
                     </StackPanel>
@@ -391,7 +417,7 @@
             <Slider x:Name="VolumeSlider" HorizontalAlignment="Right" Margin="795,0,15,91" VerticalAlignment="Bottom" Width="14" RenderTransformOrigin="0.6,1.222" Height="39" AutoToolTipPlacement="TopLeft" TickPlacement="Both" Opacity="0" ValueChanged="VolumeSlider_ValueChanged"/>
 
         </Grid>
-        
+
         <Grid x:Name="OpenMenu" Background="#FFFBFBFB"   Width="auto" RenderTransformOrigin="0.5,0.5">
             <Grid.RenderTransform>
                 <TransformGroup>
@@ -405,10 +431,10 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="250"/>
             </Grid.ColumnDefinitions>
-            <Grid x:Name="InfoGrid" Grid.Column="1" Background="#FF418CD6">
+            <Grid x:Name="InfoGrid" Grid.Column="1" Background="#FF418CD6" Panel.ZIndex="9">
 
-                <Image Height="150" Source="Assets/back.png" Stretch="UniformToFill" VerticalAlignment="Top"/>
-                <TextBlock Text="Test Text" Foreground="White" FontSize="28" FontFamily="Nirmala UI Semilight" Margin="10 100" VerticalAlignment="Top"/>
+                <Image x:Name="image" Height="150" Source="Assets/back.png" Stretch="UniformToFill" VerticalAlignment="Top"/>
+                <TextBlock x:Name="textBlock1" Text="Test Text" Foreground="White" FontSize="28" FontFamily="Nirmala UI Semilight" Margin="10 100" VerticalAlignment="Top"/>
                 <StackPanel Margin="0 150" >
                     <Grid Height="60" Margin="20 50 20 0">
                         <Grid.ColumnDefinitions>
