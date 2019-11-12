@@ -36,7 +36,7 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-250"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.9" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItem2">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItemAboutClosed">
                 <EasingDoubleKeyFrame KeyTime="0" Value="-250"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-250"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="0"/>
@@ -146,10 +146,26 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="250"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
-        <Storyboard x:Key="About_Copy1">
+        <Storyboard x:Key="AboutClose">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="AboutPanel">
                 <SplineDoubleKeyFrame KeyTime="0" Value="250"/>
                 <SplineDoubleKeyFrame KeyTime="0:0:0.5" Value="1050"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="AboutClear">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="AboutPanel">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="AboutPanel">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.8" Value="{x:Static Visibility.Hidden}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:1" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="AboutPanel">
+                <EasingDoubleKeyFrame KeyTime="0" Value="250"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="1050"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
     </Window.Resources>
@@ -162,6 +178,7 @@
         </EventTrigger>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="BackArrow">
             <BeginStoryboard x:Name="MenuClose_BeginStoryboard" Storyboard="{StaticResource MenuClose}"/>
+            <BeginStoryboard x:Name="AboutClear_BeginStoryboard1" Storyboard="{StaticResource AboutClear}"/>
         </EventTrigger>
         <EventTrigger RoutedEvent="FrameworkElement.Loaded" SourceName="MediaPlayer">
             <BeginStoryboard x:Name="AutoFadeControls_BeginStoryboard" Storyboard="{StaticResource AutoFadeControls}"/>
@@ -179,8 +196,11 @@
         <EventTrigger RoutedEvent="FrameworkElement.Loaded">
             <BeginStoryboard x:Name="AutoFadeControls_BeginStoryboard1" Storyboard="{StaticResource AutoFadeControls}"/>
         </EventTrigger>
-        <EventTrigger RoutedEvent="UIElement.MouseLeftButtonDown" SourceName="stackPanel1">
-            <BeginStoryboard x:Name="About_BeginStoryboard1" Storyboard="{StaticResource About}"/>
+        <EventTrigger RoutedEvent="UIElement.PreviewMouseLeftButtonUp" SourceName="listViewItemAboutClosed">
+            <BeginStoryboard x:Name="About_BeginStoryboard" Storyboard="{StaticResource About}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="UIElement.PreviewMouseLeftButtonUp" SourceName="listViewItemAboutOpen">
+            <BeginStoryboard x:Name="AboutClose_BeginStoryboard" Storyboard="{StaticResource AboutClose}"/>
         </EventTrigger>
     </Window.Triggers>
 
@@ -258,7 +278,7 @@
                         <materialDesign:PackIcon Kind="OpenInApp" Width="50" Height="50" VerticalAlignment="Center" />
 
 
-                        <TextBlock Text="Open New" VerticalAlignment="Center" Margin="20 0"/>
+                        <TextBlock Text="Open New" VerticalAlignment="Center" Margin="20 0" FontSize="20"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem x:Name="listViewItem1" Height="60" RenderTransformOrigin="0.5,0.5">
@@ -272,11 +292,11 @@
                     </ListViewItem.RenderTransform>
                     <StackPanel Orientation="Horizontal" Margin="10 0">
                         <materialDesign:PackIcon Kind="Disc" Width="50" Height="50" VerticalAlignment="Center" />
-                        <TextBlock Text="Open Disc" VerticalAlignment="Center" Margin="20 0"/>
+                        <TextBlock Text="Open Disc" VerticalAlignment="Center" Margin="20 0" FontSize="20"/>
                     </StackPanel>
                 </ListViewItem>
 
-                <ListViewItem x:Name="listViewItem2" Height="60" RenderTransformOrigin="0.5,0.5" PreviewMouseLeftButtonDown="HandleAboutClick">
+                <ListViewItem x:Name="listViewItemAboutClosed" Height="60" RenderTransformOrigin="0.5,0.5" Visibility="Visible" PreviewMouseLeftButtonUp="HandleAboutClickClosed">
                     <ListViewItem.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -285,11 +305,26 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </ListViewItem.RenderTransform>
-                    <StackPanel x:Name="stackPanel1" Orientation="Horizontal" Margin="10 0">
+                    <StackPanel  Orientation="Horizontal" Margin="10 0">
                         <materialDesign:PackIcon Kind="About" Width="41" Height="410" VerticalAlignment="Center" Margin="4" />
-                        <TextBlock Text="About" VerticalAlignment="Center" Margin="20 0"/>
+                        <TextBlock Text="About" VerticalAlignment="Center" Margin="20 0" FontSize="20"/>
                     </StackPanel>
                 </ListViewItem>
+                <ListViewItem x:Name="listViewItemAboutOpen" Height="60" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed" PreviewMouseLeftButtonUp="HandleAboutClickOpen">
+                    <ListViewItem.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </ListViewItem.RenderTransform>
+                    <StackPanel  Orientation="Horizontal" Margin="10 0">
+                        <materialDesign:PackIcon Kind="About" Width="41" Height="410" VerticalAlignment="Center" Margin="4" />
+                        <TextBlock Text="About" VerticalAlignment="Center" Margin="20 0" FontSize="20"/>
+                    </StackPanel>
+                </ListViewItem>
+
                 <ListViewItem x:Name="listViewItem3" Height="60" RenderTransformOrigin="0.5,0.5">
                     <ListViewItem.RenderTransform>
                         <TransformGroup>
@@ -301,7 +336,7 @@
                     </ListViewItem.RenderTransform>
                     <StackPanel Orientation="Horizontal" Margin="10 0">
                         <materialDesign:PackIcon Kind="Close" Width="50" Height="50" VerticalAlignment="Center" />
-                        <TextBlock Text="Quit" VerticalAlignment="Center" Margin="20 0"/>
+                        <TextBlock Text="Quit" VerticalAlignment="Center" Margin="20 0" FontSize="20"/>
                     </StackPanel>
                 </ListViewItem>
 

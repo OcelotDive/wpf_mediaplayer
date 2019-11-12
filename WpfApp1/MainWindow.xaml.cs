@@ -231,6 +231,10 @@ namespace WpfApp1
         {
             ButtonOpenMenu.Visibility = Visibility.Visible;
             ButtonCloseMenu.Visibility = Visibility.Collapsed;
+
+            listViewItemAboutOpen.Visibility = Visibility.Collapsed;
+            listViewItemAboutClosed.Visibility = Visibility.Visible;
+
         }
 
         private void HandleOpenFile(object sender, MouseButtonEventArgs e)
@@ -528,9 +532,18 @@ namespace WpfApp1
             return noDuplicates.Take(6).ToList();
         }
 
-        private void HandleAboutClick(object sender, MouseButtonEventArgs e)
+        private void HandleAboutClickClosed(object sender, MouseButtonEventArgs e)
         {
-           
+            listViewItemAboutClosed.Visibility = Visibility.Collapsed;
+            listViewItemAboutOpen.Visibility = Visibility.Visible;
         }
+
+        private void HandleAboutClickOpen(object sender, MouseButtonEventArgs e)
+        {
+
+            listViewItemAboutOpen.Visibility = Visibility.Collapsed;
+            listViewItemAboutClosed.Visibility = Visibility.Visible;
+        }
+        
     }
 }
