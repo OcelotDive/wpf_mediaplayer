@@ -238,10 +238,10 @@
                     <ScaleTransform/>
                     <SkewTransform/>
                     <RotateTransform/>
-                    <TranslateTransform X="-800"/>
+                    <TranslateTransform/>
                 </TransformGroup>
             </Grid.RenderTransform>
-            <Image x:Name="SplashImage" Source="Assets/WPFMEDIA.PNG" Stretch="UniformToFill" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2" >
+            <Image x:Name="SplashImage" Source="Assets/WPFMEDIA.PNG" Stretch="UniformToFill" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="3" Margin="10,0,-10,0" >
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
