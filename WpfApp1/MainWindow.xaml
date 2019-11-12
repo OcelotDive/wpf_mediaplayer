@@ -389,7 +389,7 @@
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <MediaElement x:Name="MediaPlayer" HorizontalAlignment="Left"  VerticalAlignment="Top"  LoadedBehavior="Manual" Visibility="visible" Width="Auto" Height="Auto" Stretch="Fill"  Margin="0,0,0,-10" Grid.RowSpan="2" SpeedRatio="1" ScrubbingEnabled="True"/>
-            <Grid x:Name="ControlGrid"  MouseEnter="HandleControlMouseEnter"  Grid.RowSpan="2" MouseLeave="HandleControlMouseLeave" RenderTransformOrigin="0.501,0.69" Height="107" VerticalAlignment="Bottom">
+            <Grid x:Name="ControlGrid"  MouseEnter="HandleControlMouseEnter"  Grid.RowSpan="2" MouseLeave="HandleControlMouseLeave" RenderTransformOrigin="0.501,0.69" Height="107" Width="Auto" VerticalAlignment="Bottom">
                 <Grid.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="Black" Offset="0"/>
@@ -407,7 +407,7 @@
 
                     <TextBlock x:Name="TimeDisplay" Padding="5" FontWeight="Bold" Margin="68,0,0,0" Width="110" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="#FFFFF8F8" FontSize="14" FontStretch="Expanded"><Run Background="#FFD4D4D4" /></TextBlock>
                     <Button x:Name="PlayButton" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="50" Height="50" Padding="0" Background="Black" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="110,20,0,0"  Click="PlayButton_Click" RenderTransformOrigin="0.5,0.2" Grid.Row="1" Visibility="Collapsed">
-                        <materialDesign:PackIcon Kind="Pause" Foreground="#FF3580BF" Width="25" Height="25"/>
+                        <materialDesign:PackIcon Kind="Play" Foreground="#FF3580BF" Width="25" Height="25"/>
                         <Button.ToolTip>
                             <ToolTip>
                                 Play
@@ -447,7 +447,7 @@
                         </Button.ToolTip>
                     </Button>
 
-                    <Button x:Name="LoopButton" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="50" Height="50" Padding="0" Background="Black" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="428,20,0,0" Click="LoopButton_Click" Grid.Row="1" >
+                    <Button x:Name="LoopButton" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="50" Height="50" Padding="0" Background="Black" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="428,20,71,0" Click="LoopButton_Click" Grid.Row="1" >
 
                         <materialDesign:PackIcon Kind="Loop" Foreground="#FF3580BF" Width="25" Height="25" RenderTransformOrigin="2,0.6"/>
                         <Button.ToolTip>
@@ -456,7 +456,7 @@
                             </ToolTip>
                         </Button.ToolTip>
                     </Button>
-                    <Button x:Name="UnLoopButton" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="50" Height="50" Padding="0" Background="Black" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="428,20,0,0" Click="UnLoopButton_Click" Grid.Row="1" >
+                    <Button x:Name="UnLoopButton" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="50" Height="50" Padding="0" Background="Black" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="428,20,71,0" Click="UnLoopButton_Click" Grid.Row="1" >
 
                         <materialDesign:PackIcon Kind="UndoVariant" Foreground="#FF3580BF" Width="25" Height="25" RenderTransformOrigin="2,0.6"/>
                         <Button.ToolTip>
@@ -465,7 +465,8 @@
                             </ToolTip>
                         </Button.ToolTip>
                     </Button>
-                    <Button x:Name="ShowVolumeButton" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="50" Height="50" Padding="0" Background="Black" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,71,0"  Visibility="Visible" Click="ShowVolumeButton_Click" Grid.Row="1">
+                    <Button x:Name="ShowVolumeButton" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="50" Height="50" Padding="0" Background="Black" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="40,20,71,0"  Visibility="Visible" Click="ShowVolumeButton_Click" Grid.Row="2" RenderTransformOrigin="0.5,0.5" AutomationProperties.IsOffscreenBehavior="Onscreen">
+                     
                         <materialDesign:PackIcon Kind="VolumeHigh" Foreground="#FF3580BF" Width="25" Height="25" RenderTransformOrigin="2,0.6"/>
                         <Button.ToolTip>
                             <ToolTip>
@@ -473,7 +474,8 @@
                             </ToolTip>
                         </Button.ToolTip>
                     </Button>
-                    <Button x:Name="ShowVolumeButtonOff" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="50" Height="50" Padding="0" Background="Black" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,20,71,0"  Visibility="Collapsed" Click="ShowVolumeButtonOff_Click" Grid.Row="1">
+                    <Button x:Name="ShowVolumeButtonOff" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="50" Height="50" Padding="0" Background="Black" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="40,20,71,0"  Visibility="Collapsed" Click="ShowVolumeButtonOff_Click" Grid.Row="2" RenderTransformOrigin="0.5,0.5" AutomationProperties.IsOffscreenBehavior="Onscreen">
+               
                         <materialDesign:PackIcon Kind="VolumeHigh" Foreground="#FF3580BF" Width="25" Height="25" RenderTransformOrigin="2,0.6"/>
                         <Button.ToolTip>
                             <ToolTip>
@@ -486,7 +488,7 @@
 
                 </Grid>
             </Grid>
-            <Slider x:Name="VolumeSlider" HorizontalAlignment="Right" Margin="795,0,15,91" VerticalAlignment="Bottom" Width="14" RenderTransformOrigin="0.6,1.222" Height="39" AutoToolTipPlacement="TopLeft" TickPlacement="Both" Opacity="0" ValueChanged="VolumeSlider_ValueChanged"/>
+            <Slider x:Name="VolumeSlider" HorizontalAlignment="Left" Margin="10,0,0,91" VerticalAlignment="Bottom" Width="14" RenderTransformOrigin="0.6,1.222" Height="39" AutoToolTipPlacement="TopLeft" TickPlacement="Both" Opacity="0" ValueChanged="VolumeSlider_ValueChanged"/>
 
         </Grid>
 
