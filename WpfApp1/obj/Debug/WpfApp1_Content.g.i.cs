@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/wpfmedia.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/wpf.jpg")]
 
 

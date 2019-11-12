@@ -250,7 +250,8 @@ namespace WpfApp1
                 PlayMedia(mediaFile);
 
                 // string mediaDuration = GetMediaDuration(mediaFile).ToString().Substring(0, GetMediaDuration(mediaFile).ToString().LastIndexOf("."));
-
+                listViewItemAboutOpen.Visibility = Visibility.Collapsed;
+                listViewItemAboutClosed.Visibility = Visibility.Visible;
             }
         }
 

@@ -133,5 +133,8 @@
   <ItemGroup>
     <Resource Include="Assets\WPFMEDIA.PNG" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\wpf.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
