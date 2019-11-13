@@ -117,29 +117,6 @@
                 <SplineDoubleKeyFrame KeyTime="0:0:1.2" Value="0"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
-        <Storyboard x:Key="SplashFade">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="SplashPanel">
-                <EasingDoubleKeyFrame KeyTime="0:0:2" Value="1"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:3" Value="1"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:3.5" Value="1"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:4.5" Value="0"/>
-            </DoubleAnimationUsingKeyFrames>
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="SplashPanel">
-                <DiscreteObjectKeyFrame KeyTime="0:0:3" Value="{x:Static Visibility.Visible}"/>
-                <DiscreteObjectKeyFrame KeyTime="0:0:3.5" Value="{x:Static Visibility.Visible}"/>
-                <DiscreteObjectKeyFrame KeyTime="0:0:4.5" Value="{x:Static Visibility.Hidden}"/>
-            </ObjectAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="SplashPanel">
-                <EasingDoubleKeyFrame KeyTime="0:0:3" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:3.5" Value="-266.66666666666663"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:4.5" Value="-800"/>
-            </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="SplashPanel">
-                <EasingDoubleKeyFrame KeyTime="0:0:3" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:3.5" Value="-266.66666666666663"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:4.5" Value="-800"/>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
         <Storyboard x:Key="About">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="AboutPanel">
                 <EasingDoubleKeyFrame KeyTime="0" Value="1050"/>
@@ -201,7 +178,6 @@
         </EventTrigger>
         <EventTrigger RoutedEvent="FrameworkElement.Loaded" SourceName="MediaPlayer">
             <BeginStoryboard x:Name="AutoFadeControls_BeginStoryboard" Storyboard="{StaticResource AutoFadeControls}"/>
-            <BeginStoryboard Storyboard="{StaticResource SplashFade}"/>
         </EventTrigger>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ShowVolumeButton">
             <BeginStoryboard x:Name="VolumeExpand_BeginStoryboard" Storyboard="{StaticResource VolumeExpand}"/>
@@ -227,32 +203,8 @@
     </Window.Triggers>
 
     <Grid Background="#ff3580bf">
-        <Grid Background="Black" Panel.ZIndex="99" Margin="0,0,251,0" x:Name="SplashPanel" RenderTransformOrigin="0.5,0.5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="331*"/>
-                <ColumnDefinition Width="434*"/>
-                <ColumnDefinition Width="0*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Grid.RenderTransform>
-            <Image x:Name="SplashImage" Source="Assets/WPFMEDIA.PNG" Stretch="UniformToFill" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="3" Margin="10,0,-10,0" >
-                <Image.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Image.RenderTransform>
-            </Image>
 
-        </Grid>
+       
         <StackPanel x:Name="AboutPanel" Background="#FFFBFBFB"   Width="auto"  Panel.ZIndex="8" RenderTransformOrigin="1,0.5" Margin="0" Opacity="0">
 
             <StackPanel.RenderTransform>
@@ -466,7 +418,7 @@
                         </Button.ToolTip>
                     </Button>
                     <Button x:Name="ShowVolumeButton" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="50" Height="50" Padding="0" Background="Black" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="40,20,71,0"  Visibility="Visible" Click="ShowVolumeButton_Click" Grid.Row="2" RenderTransformOrigin="0.5,0.5" AutomationProperties.IsOffscreenBehavior="Onscreen">
-                     
+
                         <materialDesign:PackIcon Kind="VolumeHigh" Foreground="#FF3580BF" Width="25" Height="25" RenderTransformOrigin="2,0.6"/>
                         <Button.ToolTip>
                             <ToolTip>
@@ -475,7 +427,7 @@
                         </Button.ToolTip>
                     </Button>
                     <Button x:Name="ShowVolumeButtonOff" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="50" Height="50" Padding="0" Background="Black" BorderBrush="{x:Null}" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="40,20,71,0"  Visibility="Collapsed" Click="ShowVolumeButtonOff_Click" Grid.Row="2" RenderTransformOrigin="0.5,0.5" AutomationProperties.IsOffscreenBehavior="Onscreen">
-               
+
                         <materialDesign:PackIcon Kind="VolumeHigh" Foreground="#FF3580BF" Width="25" Height="25" RenderTransformOrigin="2,0.6"/>
                         <Button.ToolTip>
                             <ToolTip>

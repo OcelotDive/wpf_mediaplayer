@@ -91,6 +91,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DirectoryCreator.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -135,6 +136,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\wpf.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\photo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\canal.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\image_part_001.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\image_part_002.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
