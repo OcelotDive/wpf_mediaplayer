@@ -164,6 +164,25 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="1050"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
+        <Storyboard x:Key="SplashSplit">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="SplashImage1">
+                <EasingDoubleKeyFrame KeyTime="0:0:4" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:6" Value="-1500"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="SplashImage2">
+                <EasingDoubleKeyFrame KeyTime="0:0:2" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:4" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:6" Value="1500"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grid">
+                <EasingDoubleKeyFrame KeyTime="0:0:4.2" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:5.8" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="grid">
+                <DiscreteObjectKeyFrame KeyTime="0:0:5.8" Value="{x:Static Visibility.Visible}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:6" Value="{x:Static Visibility.Hidden}"/>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
     </Window.Resources>
     <Window.Triggers>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonOpenMenu">
@@ -178,6 +197,7 @@
         </EventTrigger>
         <EventTrigger RoutedEvent="FrameworkElement.Loaded" SourceName="MediaPlayer">
             <BeginStoryboard x:Name="AutoFadeControls_BeginStoryboard" Storyboard="{StaticResource AutoFadeControls}"/>
+            <BeginStoryboard Storyboard="{StaticResource SplashSplit}"/>
         </EventTrigger>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ShowVolumeButton">
             <BeginStoryboard x:Name="VolumeExpand_BeginStoryboard" Storyboard="{StaticResource VolumeExpand}"/>
@@ -203,7 +223,7 @@
     </Window.Triggers>
 
     <Grid Background="#ff3580bf">
-        <Grid Background="Black" Panel.ZIndex="98" Margin="0,0,251,0">
+        <Grid x:Name="grid" Background="Black" Margin="0,0,251,0" RenderTransformOrigin="0.5,0.5" Panel.ZIndex="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -212,14 +232,31 @@
                 <RowDefinition Height="*" />
 
             </Grid.RowDefinitions>
+            <TextBlock x:Name="textBlock2" Text="C#" Foreground="#FFF9EAEA" FontSize="72" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Bodoni MT Black" />
+            <Image x:Name="SplashImage1" Source="Assets/image_part_001.jpg" Stretch="Fill" RenderTransformOrigin="0.5,0.5"  >
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
 
 
-            <Image x:Name="SplashImage1" Source="Assets/image_part_001.jpg" Stretch="Fill"  />
 
-
-
-
-            <Image x:Name="SplashImage2" Source="Assets/image_part_002.jpg" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,0,1,0"  />
+            <TextBlock Text=".Net" Foreground="#FFF9EAEA" FontSize="72" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Margin="0" FontFamily="Bodoni MT Black" />
+            <Image x:Name="SplashImage2" Source="Assets/image_part_002.jpg" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,0,1,0"  >
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
 
         </Grid>
 
@@ -476,7 +513,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="250"/>
             </Grid.ColumnDefinitions>
-            <Grid x:Name="InfoGrid" Grid.Column="1" Background="#FF418CD6" Panel.ZIndex="9">
+            <Grid x:Name="InfoGrid" Grid.Column="1" Background="#FF418CD6" Panel.ZIndex="98" RenderTransformOrigin="0.5,0.5">
 
                 <Image x:Name="image" Height="150" Source="Assets/back.png" Stretch="UniformToFill" VerticalAlignment="Top"/>
                 <TextBlock x:Name="textBlock1" Text="Test Text" Foreground="White" FontSize="28" FontFamily="Nirmala UI Semilight" Margin="10 100" VerticalAlignment="Top"/>
