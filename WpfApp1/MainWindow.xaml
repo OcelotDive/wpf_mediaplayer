@@ -203,9 +203,28 @@
     </Window.Triggers>
 
     <Grid Background="#ff3580bf">
+        <Grid Background="Black" Panel.ZIndex="98" Margin="0,0,251,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
 
-       
+            </Grid.RowDefinitions>
+
+
+            <Image x:Name="SplashImage1" Source="Assets/image_part_001.jpg" Stretch="Fill"  />
+
+
+
+
+            <Image x:Name="SplashImage2" Source="Assets/image_part_002.jpg" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,0,1,0"  />
+
+        </Grid>
+
         <StackPanel x:Name="AboutPanel" Background="#FFFBFBFB"   Width="auto"  Panel.ZIndex="8" RenderTransformOrigin="1,0.5" Margin="0" Opacity="0">
+
 
             <StackPanel.RenderTransform>
                 <TransformGroup>
