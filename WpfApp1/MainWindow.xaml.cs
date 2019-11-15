@@ -116,7 +116,7 @@ namespace WpfApp1
         {
             Size dpi = new Size(96, 96);
             RenderTargetBitmap bmp =
-                new RenderTargetBitmap((int)window.Width, (int)window.Height - 120,
+            new RenderTargetBitmap((int)window.Width, (int)window.Height - 120,
                 dpi.Width, dpi.Height, PixelFormats.Pbgra32);
             bmp.Render(mediaDisplay);
             JpegBitmapEncoder encoder = new JpegBitmapEncoder();
@@ -484,7 +484,7 @@ namespace WpfApp1
             List<string> noDuplicates = all.Reverse().Distinct().ToList<string>();
             foreach(var str in noDuplicates)
             {
-                MessageBox.Show(str);
+               // MessageBox.Show(str);
            
             }
 
@@ -503,6 +503,10 @@ namespace WpfApp1
             listViewItemAboutOpen.Visibility = Visibility.Collapsed;
             listViewItemAboutClosed.Visibility = Visibility.Visible;
         }
-        
+
+        private void HandleQuitButtonClick(object sender, MouseButtonEventArgs e)
+        {
+            ApplicationClose();
+        }
     }
 }
