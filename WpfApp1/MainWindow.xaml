@@ -26,7 +26,7 @@
                 <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="250"/>
             </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItem">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="listViewItemOpen">
                 <EasingDoubleKeyFrame KeyTime="0" Value="-250"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-250"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="0"/>
@@ -256,7 +256,7 @@
         <EventTrigger RoutedEvent="UIElement.PreviewMouseLeftButtonUp" SourceName="listViewItemAboutOpen">
             <BeginStoryboard x:Name="AboutClose_BeginStoryboard" Storyboard="{StaticResource AboutClose}"/>
         </EventTrigger>
-        <EventTrigger RoutedEvent="UIElement.PreviewMouseLeftButtonDown" SourceName="listViewItem">
+        <EventTrigger RoutedEvent="UIElement.PreviewMouseLeftButtonDown" SourceName="listViewItemOpen">
             <BeginStoryboard x:Name="AboutClear_BeginStoryboard" Storyboard="{StaticResource AboutClear}"/>
         </EventTrigger>
     </Window.Triggers>
@@ -370,7 +370,7 @@
                 </Button>
             </StackPanel>
             <ListView>
-                <ListViewItem x:Name="listViewItem" Height="60" RenderTransformOrigin="0.5,0.5" PreviewMouseLeftButtonDown="HandleOpenFile">
+                <ListViewItem x:Name="listViewItemOpen" Height="60" RenderTransformOrigin="0.5,0.5" PreviewMouseLeftButtonDown="HandleOpenFile">
                     <ListViewItem.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
