@@ -289,9 +289,7 @@ namespace WpfApp1
         void TimeSlider_DragCompleted(object sender, DragCompletedEventArgs e)
         {
             scrubberIsDragging = false;
-
             MediaPlayer.Position = TimeSpan.FromSeconds(TimeSlider.Value);
-
             secsMediaHasPlayed = (int)TimeSlider.Value;
         }
 
@@ -486,7 +484,7 @@ namespace WpfApp1
             foreach(var str in noDuplicates)
             {
                // MessageBox.Show(str);
-           
+                // Remove this when finished
             }
 
             return noDuplicates.Take(6).ToList();
@@ -543,6 +541,16 @@ namespace WpfApp1
                 isPinned = false;
                 this.Topmost = false;
             }
+        }
+
+        private void handleThemeChange(object sender, MouseButtonEventArgs e)
+        {
+            InfoGrid.Background = Brushes.DarkRed;
+            MenuPanel.Background = Brushes.DarkRed;
+            grid1.Background = Brushes.DarkRed;
+            recentPlayGrid.Background = Brushes.Black;
+
+
         }
     }
 }

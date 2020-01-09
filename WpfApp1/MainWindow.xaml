@@ -588,13 +588,13 @@
                         </Button>
                     </StackPanel>
         
-                    <StackPanel  x:Name="optionsPanel" Orientation="Horizontal" Margin="10 50" Visibility="Collapsed">
+                    <StackPanel  x:Name="optionsPanel" Orientation="Horizontal" Margin="10 50" Visibility="Collapsed" Background="Black">
                         <StackPanel.Effect>
                             <DropShadowEffect/>
                         </StackPanel.Effect>
 
                         <ListView>
-                            <ListViewItem x:Name="listViewItemTheme" Height="60" RenderTransformOrigin="0.5,0.5">
+                            <ListViewItem x:Name="listViewItemTheme" Height="60" RenderTransformOrigin="0.5,0.5" PreviewMouseLeftButtonDown="handleThemeChange" >
                                 <StackPanel  Orientation="Horizontal" Margin="10 0">
                                     <materialDesign:PackIcon Kind="ThemeLightDark" Width="20" Height="20" VerticalAlignment="Center" />
                                     <TextBlock Text="Theme" VerticalAlignment="Center" Margin="20 0" FontSize="16"/>
@@ -634,7 +634,7 @@
 
                 </StackPanel>
             </Grid>
-            <Grid>
+            <Grid x:Name="recentPlayGrid">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="50"/>
