@@ -548,8 +548,8 @@ namespace WpfApp1
             BrushConverter bc = new BrushConverter();
             InfoGrid.Background = (Brush)bc.ConvertFrom("#FF440505");
            
-            MenuPanel.Background = Brushes.DarkRed;
-            grid1.Background = Brushes.DarkRed;
+            MenuPanel.Background = (Brush)bc.ConvertFrom("#FF440505");
+            grid1.Background = (Brush)bc.ConvertFrom("#FF440505");
             recentPlayGrid.Background = Brushes.Black;
 
 
