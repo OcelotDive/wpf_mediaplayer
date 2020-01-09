@@ -545,7 +545,9 @@ namespace WpfApp1
 
         private void handleThemeChange(object sender, MouseButtonEventArgs e)
         {
-            InfoGrid.Background = Brushes.DarkRed;
+            BrushConverter bc = new BrushConverter();
+            InfoGrid.Background = (Brush)bc.ConvertFrom("#FF440505");
+           
             MenuPanel.Background = Brushes.DarkRed;
             grid1.Background = Brushes.DarkRed;
             recentPlayGrid.Background = Brushes.Black;
