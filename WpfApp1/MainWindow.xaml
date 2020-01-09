@@ -581,10 +581,10 @@
                 <StackPanel Margin="0 150" >
                     <StackPanel>
                         <Button  x:Name="optionsClosedButton" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="25" Height="25" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Margin="100,15" Click="HandleOptionsClosed">
-                            <materialDesign:PackIcon Kind="PaperclipHorizontal" Width="25" Height="25" VerticalAlignment="Center" />
+                            <materialDesign:PackIcon Kind="CogOutline" Width="25" Height="25" VerticalAlignment="Center" />
                         </Button>
                         <Button  x:Name="optionsOpenButton" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="25" Height="25" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Margin="100,15" Visibility="Collapsed" Click="HandleOptionsOpen">
-                            <materialDesign:PackIcon Kind="Paperclip" Width="25" Height="25" VerticalAlignment="Center" />
+                            <materialDesign:PackIcon Kind="Cog" Width="25" Height="25" VerticalAlignment="Center" />
                         </Button>
                     </StackPanel>
                     <StackPanel  x:Name="optionsPanel" Orientation="Horizontal" Margin="10 50" Visibility="Collapsed">
