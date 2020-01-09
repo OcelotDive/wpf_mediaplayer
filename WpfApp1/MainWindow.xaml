@@ -587,6 +587,7 @@
                             <materialDesign:PackIcon Kind="Cog" Width="25" Height="25" VerticalAlignment="Center" />
                         </Button>
                     </StackPanel>
+        
                     <StackPanel  x:Name="optionsPanel" Orientation="Horizontal" Margin="10 50" Visibility="Collapsed">
                         <StackPanel.Effect>
                             <DropShadowEffect/>
@@ -595,22 +596,36 @@
                         <ListView>
                             <ListViewItem x:Name="listViewItemTheme" Height="60" RenderTransformOrigin="0.5,0.5">
                                 <StackPanel  Orientation="Horizontal" Margin="10 0">
-                                    <materialDesign:PackIcon Kind="ThemeLightDark" Width="25" Height="25" VerticalAlignment="Center" />
-                                    <TextBlock Text="Theme" VerticalAlignment="Center" Margin="20 0" FontSize="20"/>
+                                    <materialDesign:PackIcon Kind="ThemeLightDark" Width="20" Height="20" VerticalAlignment="Center" />
+                                    <TextBlock Text="Theme" VerticalAlignment="Center" Margin="20 0" FontSize="16"/>
                                 </StackPanel>
                             </ListViewItem>
                             <ListViewItem x:Name="listViewItemOnTop" Height="60" RenderTransformOrigin="0.5,0.5" PreviewMouseLeftButtonDown="handlePinOn" >
                                 <StackPanel  Orientation="Horizontal" Margin="10 0">
-                                    <materialDesign:PackIcon Kind="Pin" x:Name="pinOn" Width="25" Height="25" VerticalAlignment="Center" Visibility="Collapsed" />
-                                    <materialDesign:PackIcon Kind="PinOff" x:Name="pinOff" Width="25" Height="25" VerticalAlignment="Center" />
-                                    <TextBlock Text="On Top" VerticalAlignment="Center" Margin="20 0" FontSize="20"/>
+                                    <materialDesign:PackIcon Kind="Pin" x:Name="pinOn" Width="20" Height="20" VerticalAlignment="Center" Visibility="Collapsed" />
+                                    <materialDesign:PackIcon Kind="PinOff" x:Name="pinOff" Width="20" Height="20" VerticalAlignment="Center" />
+                                    <TextBlock Text="Always On Top" VerticalAlignment="Center" Margin="20 0" FontSize="16"/>
                                 </StackPanel>
                             </ListViewItem>
                             <ListViewItem x:Name="listViewDeleteRecent" Height="60" RenderTransformOrigin="0.5,0.5" PreviewMouseLeftButtonDown="handlePinOn" >
                                 <StackPanel  Orientation="Horizontal" Margin="10 0">
-                                    <materialDesign:PackIcon Kind="Delete"  Width="25" Height="25" VerticalAlignment="Center" />
+                                    <materialDesign:PackIcon Kind="Delete"  Width="20" Height="20" VerticalAlignment="Center" />
                                    
-                                    <TextBlock Text="Delete Recent" VerticalAlignment="Center" Margin="20 0" FontSize="20"/>
+                                    <TextBlock Text="Delete Recent" VerticalAlignment="Center" Margin="20 0" FontSize="16"/>
+                                </StackPanel>
+                            </ListViewItem>
+                            <ListViewItem x:Name="listViewSystemTray" Height="60" RenderTransformOrigin="0.5,0.5" PreviewMouseLeftButtonDown="handlePinOn" >
+                                <StackPanel  Orientation="Horizontal" Margin="10 0">
+                                    <materialDesign:PackIcon Kind="ImageArea"  Width="20" Height="20" VerticalAlignment="Center" />
+
+                                    <TextBlock Text="Add to System Tray" VerticalAlignment="Center" Margin="20 0" FontSize="16"/>
+                                </StackPanel>
+                            </ListViewItem>
+                            <ListViewItem x:Name="listViewPauseOnMin" Height="60" RenderTransformOrigin="0.5,0.5" PreviewMouseLeftButtonDown="handlePinOn" >
+                                <StackPanel  Orientation="Horizontal" Margin="10 0">
+                                    <materialDesign:PackIcon Kind="PauseOctagon"  Width="20" Height="20" VerticalAlignment="Center" />
+
+                                    <TextBlock Text="Pause on Min" VerticalAlignment="Center" Margin="20 0" FontSize="16"/>
                                 </StackPanel>
                             </ListViewItem>
                         </ListView>
