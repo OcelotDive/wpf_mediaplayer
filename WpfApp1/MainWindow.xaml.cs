@@ -532,6 +532,8 @@ namespace WpfApp1
                 pinOff.Visibility = Visibility.Collapsed;
                 pinOn.Visibility = Visibility.Visible;
                 isPinned = true;
+                this.Topmost = true;
+                
             }
             else
             {
@@ -539,6 +541,7 @@ namespace WpfApp1
                 pinOn.Visibility = Visibility.Collapsed;
                 pinOff.Visibility = Visibility.Visible;
                 isPinned = false;
+                this.Topmost = false;
             }
         }
     }
