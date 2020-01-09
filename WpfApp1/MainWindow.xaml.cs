@@ -38,6 +38,7 @@ namespace WpfApp1
         bool scrubberIsDragging = false;
         int secsMediaHasPlayed = 0;
         bool mediaIsLooping = false;
+        bool isPinned = false;
         TimeSpan mediaDuration;
         //string previousImageName;
        // string previouslyPlayedImagesPath;
@@ -507,6 +508,38 @@ namespace WpfApp1
         private void HandleQuitButtonClick(object sender, MouseButtonEventArgs e)
         {
             ApplicationClose();
+        }
+
+        private void HandleOptionsClosed(object sender, RoutedEventArgs e)
+        {
+            optionsClosedButton.Visibility = Visibility.Collapsed;
+            optionsOpenButton.Visibility = Visibility.Visible;
+            optionsPanel.Visibility = Visibility.Visible;
+        }
+
+        private void HandleOptionsOpen(object sender, RoutedEventArgs e)
+        {
+            optionsOpenButton.Visibility = Visibility.Collapsed;
+            optionsClosedButton.Visibility = Visibility.Visible;
+            optionsPanel.Visibility = Visibility.Collapsed;
+        }
+
+        private void handlePinOn(object sender, MouseButtonEventArgs e)
+        {
+           
+            if (!isPinned)
+            {
+                pinOff.Visibility = Visibility.Collapsed;
+                pinOn.Visibility = Visibility.Visible;
+                isPinned = true;
+            }
+            else
+            {
+                
+                pinOn.Visibility = Visibility.Collapsed;
+                pinOff.Visibility = Visibility.Visible;
+                isPinned = false;
+            }
         }
     }
 }
