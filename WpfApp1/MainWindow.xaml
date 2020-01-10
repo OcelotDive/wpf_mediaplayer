@@ -657,10 +657,10 @@
                                     <TextBlock Text="Add to System Tray" VerticalAlignment="Center" Margin="20 0" FontSize="16"/>
                                 </StackPanel>
                             </ListViewItem>
-                            <ListViewItem x:Name="listViewPauseOnMin" Height="60" RenderTransformOrigin="0.5,0.5" PreviewMouseLeftButtonDown="handlePinOn" >
+                            <ListViewItem x:Name="listViewPauseOnMin" Height="60" RenderTransformOrigin="0.5,0.5" PreviewMouseLeftButtonDown="handlePauseOnMin">
                                 <StackPanel  Orientation="Horizontal" Margin="10 0">
-                                    <materialDesign:PackIcon Kind="PauseOctagon"  Width="20" Height="20" VerticalAlignment="Center" />
-
+                                    <materialDesign:PackIcon x:Name="pauseOnMinOn" Kind="PauseOctagon"  Width="20" Height="20" VerticalAlignment="Center" Visibility="Collapsed" />
+                                    <materialDesign:PackIcon x:Name="pauseOnMinOff" Kind="PauseOctagonOutline"  Width="20" Height="20" VerticalAlignment="Center" Visibility="Visible" />
                                     <TextBlock Text="Pause on Min" VerticalAlignment="Center" Margin="20 0" FontSize="16"/>
                                 </StackPanel>
                             </ListViewItem>

@@ -40,6 +40,7 @@ namespace WpfApp1
         int secsMediaHasPlayed = 0;
         bool mediaIsLooping = false;
         bool isPinned = false;
+        bool pauseOnMin = false;
         TimeSpan mediaDuration;
         //string previousImageName;
        // string previouslyPlayedImagesPath;
@@ -359,7 +360,14 @@ namespace WpfApp1
         private void HandleMinimize(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow.WindowState = WindowState.Minimized;
-            PauseButton_Click(sender, e);
+            if (pauseOnMin)
+            {
+                PauseButton_Click(sender, e);
+            }
+            else
+            {
+                PlayButton_Click(sender, e);
+            }
         }
 
         private void HandleControlMouseEnter(object sender, MouseEventArgs e)
@@ -579,6 +587,20 @@ namespace WpfApp1
 
         }
 
-   
+        private void handlePauseOnMin(object sender, MouseButtonEventArgs e)
+        {
+            if (!pauseOnMin)
+            {
+                pauseOnMinOff.Visibility = Visibility.Collapsed;
+                pauseOnMinOn.Visibility = Visibility.Visible;
+                pauseOnMin = true;
+            }
+            else
+            {
+                pauseOnMinOff.Visibility = Visibility.Visible;
+                pauseOnMinOn.Visibility = Visibility.Collapsed;
+                pauseOnMin = false;
+            }
+        }
     }
 }
