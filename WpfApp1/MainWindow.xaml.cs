@@ -34,6 +34,7 @@ namespace WpfApp1
         DispatcherTimer mouseLeftDownTimer;
         DispatcherTimer detectMouseStopTimer;
         DispatcherTimer imageSnapShotTimer;
+        DispatcherTimer deleteCacheTimer;
         string mediaFile;
         bool scrubberIsDragging = false;
         int secsMediaHasPlayed = 0;
@@ -64,7 +65,10 @@ namespace WpfApp1
             imageSnapShotTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(5) };
             imageSnapShotTimer.Tick += new EventHandler(TakeMediaImage_Ticker);
 
-           DirectoryCreator directoryStore = new DirectoryCreator();
+            deleteCacheTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1.8) };
+            deleteCacheTimer.Tick += new EventHandler(deleteCacheAndClose_Ticker);
+
+            DirectoryCreator directoryStore = new DirectoryCreator();
             directoryStore.BootStrapMediaPlayer();
           
             AddImagesToView(DirectoryCreator.PreviousImagePath);
@@ -139,6 +143,13 @@ namespace WpfApp1
             }
             imageSnapShotTimer.Stop();
             
+        }
+
+        private void deleteCacheAndClose_Ticker(object sender, EventArgs e)
+        {
+           
+            System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+            Application.Current.Shutdown();
         }
 
 
@@ -552,7 +563,7 @@ namespace WpfApp1
             DirectoryInfo fileInfo = new DirectoryInfo(previousFilePath);
             DirectoryInfo imageInfo = new DirectoryInfo(previousImagePath);
             
-            foreach(var file in fileInfo.GetFiles())
+            foreach (var file in fileInfo.GetFiles())
             {
                 file.Delete();
             
@@ -563,8 +574,10 @@ namespace WpfApp1
                
             }
 
-            AddImagesToView(DirectoryCreator.PreviousImagePath);
+            deleteCacheTimer.Start();
 
         }
+
+     
     }
 }
