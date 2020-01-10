@@ -576,7 +576,7 @@
             </Grid.ColumnDefinitions>
             <Grid x:Name="InfoGrid" Grid.Column="1" Background="#FF418CD6" Panel.ZIndex="98" RenderTransformOrigin="0.5,0.5">
 
-                <Image x:Name="image" Height="150" Source="Assets/back.png" Stretch="UniformToFill" VerticalAlignment="Top"/>
+                <StackPanel x:Name="cornerImage" Height="150"  VerticalAlignment="Top" Background="#FF040404"></StackPanel>
                 <TextBlock x:Name="textBlock1" Text="Wpf Media Player" Foreground="White" FontSize="26" FontFamily="Nirmala UI Semilight" Margin="10 100" VerticalAlignment="Top"/>
                 <StackPanel Margin="0 150" >
                     <StackPanel>
@@ -588,18 +588,13 @@
                         </Button>
                     </StackPanel>
         
-                    <StackPanel  x:Name="optionsPanel" Orientation="Horizontal" Margin="10 50" Visibility="Collapsed" Background="Black">
+                    <StackPanel  x:Name="optionsPanel" Orientation="Horizontal" Margin="10 50" Visibility="Collapsed">
                         <StackPanel.Effect>
                             <DropShadowEffect/>
                         </StackPanel.Effect>
 
-                        <ListView>
-                            <ListViewItem x:Name="listViewItemTheme" Height="60" RenderTransformOrigin="0.5,0.5" PreviewMouseLeftButtonDown="handleThemeChange" >
-                                <StackPanel  Orientation="Horizontal" Margin="10 0">
-                                    <materialDesign:PackIcon Kind="ThemeLightDark" Width="20" Height="20" VerticalAlignment="Center" />
-                                    <TextBlock Text="Theme" VerticalAlignment="Center" Margin="20 0" FontSize="16"/>
-                                </StackPanel>
-                            </ListViewItem>
+                        <ListView Background="{x:Null}">
+                           
                             <ListViewItem x:Name="listViewItemOnTop" Height="60" RenderTransformOrigin="0.5,0.5" PreviewMouseLeftButtonDown="handlePinOn" >
                                 <StackPanel  Orientation="Horizontal" Margin="10 0">
                                     <materialDesign:PackIcon Kind="Pin" x:Name="pinOn" Width="20" Height="20" VerticalAlignment="Center" Visibility="Collapsed" />

@@ -551,7 +551,7 @@ namespace WpfApp1
             MenuPanel.Background = (Brush)bc.ConvertFrom("#FF440505");
             grid1.Background = (Brush)bc.ConvertFrom("#FF440505");
             recentPlayGrid.Background = Brushes.Black;
-
+            cornerImage.Background = (Brush)bc.ConvertFrom("#FFFFF6F6");
 
         }
     }
