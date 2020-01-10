@@ -221,6 +221,56 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:3" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
+        <Storyboard x:Key="ResetRecent">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="ImageOne">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Hidden}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:2.4" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="ImageTwo">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.4" Value="{x:Static Visibility.Collapsed}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:2.2" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="ImageThree">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.6" Value="{x:Static Visibility.Collapsed}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:2" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="ImageFour">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.8" Value="{x:Static Visibility.Collapsed}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:1.8" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="ImageFive">
+                <DiscreteObjectKeyFrame KeyTime="0:0:1" Value="{x:Static Visibility.Collapsed}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:1.6" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="ImageSix">
+                <DiscreteObjectKeyFrame KeyTime="0:0:1.2" Value="{x:Static Visibility.Collapsed}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:1.4" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="recentOne">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Hidden}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:2.4" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="grid2">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.4" Value="{x:Static Visibility.Collapsed}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:2.2" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="grid3">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.6" Value="{x:Static Visibility.Collapsed}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:2" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="grid4">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.8" Value="{x:Static Visibility.Collapsed}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:1.8" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="grid5">
+                <DiscreteObjectKeyFrame KeyTime="0:0:1" Value="{x:Static Visibility.Collapsed}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:1.6" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="grid6">
+                <DiscreteObjectKeyFrame KeyTime="0:0:1.2" Value="{x:Static Visibility.Collapsed}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:1.4" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
     </Window.Resources>
     <Window.Triggers>
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonOpenMenu">
@@ -259,12 +309,15 @@
         <EventTrigger RoutedEvent="UIElement.PreviewMouseLeftButtonDown" SourceName="listViewItemOpen">
             <BeginStoryboard x:Name="AboutClear_BeginStoryboard" Storyboard="{StaticResource AboutClear}"/>
         </EventTrigger>
+        <EventTrigger RoutedEvent="UIElement.PreviewMouseLeftButtonDown" SourceName="listViewDeleteRecent">
+            <BeginStoryboard x:Name="ResetRecent_BeginStoryboard1" Storyboard="{StaticResource ResetRecent}"/>
+        </EventTrigger>
     </Window.Triggers>
 
     <Grid x:Name="grid1" Background="#ff3580bf">
 
 
-        <Grid x:Name="grid" Background="Black" Margin="0,0,251,0" RenderTransformOrigin="0.5,0.5" Panel.ZIndex="1">
+        <Grid x:Name="grid" Background="Black" Margin="0,0,251,0" RenderTransformOrigin="0.5,0.5" Panel.ZIndex="1" Visibility="Collapsed">
             <Grid.Effect>
                 <DropShadowEffect/>
             </Grid.Effect>
@@ -286,7 +339,7 @@
             </Grid.RowDefinitions>
 
             <TextBlock x:Name="textBlock2" Text="C#" Foreground="#FFF9EAEA" FontSize="72" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Bodoni MT Black" />
-            <Image x:Name="SplashImage1" Source="Assets/image_part_001.jpg" Stretch="Fill" RenderTransformOrigin="0.5,0.5"  >
+            <Image x:Name="SplashImage1" Source="Assets/image_part_001.jpg" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed"  >
 
                 <Image.RenderTransform>
                     <TransformGroup>
@@ -299,7 +352,7 @@
             </Image>
 
             <TextBlock Text=".Net" Foreground="#FFF9EAEA" FontSize="72" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Margin="0" FontFamily="Bodoni MT Black" />
-            <Image x:Name="SplashImage2" Source="Assets/image_part_002.jpg" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,0,1,0"  >
+            <Image x:Name="SplashImage2" Source="Assets/image_part_002.jpg" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Margin="0,0,1,0" Visibility="Collapsed"  >
                 <Image.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -587,14 +640,14 @@
                             <materialDesign:PackIcon Kind="Cog" Width="25" Height="25" VerticalAlignment="Center" />
                         </Button>
                     </StackPanel>
-        
+
                     <StackPanel  x:Name="optionsPanel" Orientation="Horizontal" Margin="10 50" Visibility="Collapsed">
                         <StackPanel.Effect>
                             <DropShadowEffect/>
                         </StackPanel.Effect>
 
                         <ListView Background="{x:Null}">
-                           
+
                             <ListViewItem x:Name="listViewItemOnTop" Height="60" RenderTransformOrigin="0.5,0.5" PreviewMouseLeftButtonDown="handlePinOn" >
                                 <StackPanel  Orientation="Horizontal" Margin="10 0">
                                     <materialDesign:PackIcon Kind="Pin" x:Name="pinOn" Width="20" Height="20" VerticalAlignment="Center" Visibility="Collapsed" />
@@ -602,10 +655,10 @@
                                     <TextBlock Text="Always On Top" VerticalAlignment="Center" Margin="20 0" FontSize="16"/>
                                 </StackPanel>
                             </ListViewItem>
-                            <ListViewItem x:Name="listViewDeleteRecent" Height="60" RenderTransformOrigin="0.5,0.5" PreviewMouseLeftButtonDown="handlePinOn" >
+                            <ListViewItem x:Name="listViewDeleteRecent" Height="60" RenderTransformOrigin="0.5,0.5" PreviewMouseLeftButtonDown="handleCacheEmpty" >
                                 <StackPanel  Orientation="Horizontal" Margin="10 0">
                                     <materialDesign:PackIcon Kind="Delete"  Width="20" Height="20" VerticalAlignment="Center" />
-                                   
+
                                     <TextBlock Text="Delete Recent" VerticalAlignment="Center" Margin="20 0" FontSize="16"/>
                                 </StackPanel>
                             </ListViewItem>
@@ -650,7 +703,7 @@
                 </Button>
                 <TextBlock x:Name="textBlock"  Text="Recent Playlist" Foreground="#FF418CD6" FontSize="30" FontWeight="Bold" Margin="5 5" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"/>
 
-                <Grid Margin="20" Grid.Row="2" Grid.Column="0">
+                <Grid x:Name="recentOne" Margin="20" Grid.Row="2" Grid.Column="0">
                     <Grid.Effect>
                         <DropShadowEffect BlurRadius="20"/>
                     </Grid.Effect>
@@ -667,7 +720,7 @@
                     </StackPanel>
                     <TextBlock x:Name="ImageOneName"   Foreground="#FF418CD6" FontSize="15" FontWeight="Bold" Margin="5 5" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"/>
                 </Grid>
-                <Grid Margin="20" Grid.Row="2" Grid.Column="1">
+                <Grid x:Name="grid2" Margin="20" Grid.Row="2" Grid.Column="1">
                     <Grid.Effect>
                         <DropShadowEffect BlurRadius="20"/>
                     </Grid.Effect>
@@ -685,7 +738,7 @@
                     <TextBlock x:Name="ImageTwoName"   Foreground="#FF418CD6" FontSize="15" FontWeight="Bold" Margin="5 5" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"/>
                 </Grid>
 
-                <Grid Margin="20" Grid.Row="2" Grid.Column="2">
+                <Grid x:Name="grid3" Margin="20" Grid.Row="2" Grid.Column="2">
                     <Grid.Effect>
                         <DropShadowEffect BlurRadius="20"/>
                     </Grid.Effect>
@@ -703,7 +756,7 @@
                     <TextBlock x:Name="ImageThreeName"   Foreground="#FF418CD6" FontSize="15" FontWeight="Bold" Margin="5 5" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"/>
                 </Grid>
 
-                <Grid Margin="20" Grid.Row="3" Grid.Column="0">
+                <Grid x:Name="grid4" Margin="20" Grid.Row="3" Grid.Column="0">
                     <Grid.Effect>
                         <DropShadowEffect BlurRadius="20"/>
                     </Grid.Effect>
@@ -721,7 +774,7 @@
                     <TextBlock x:Name="ImageFourName"   Foreground="#FF418CD6" FontSize="15" FontWeight="Bold" Margin="5 5" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"/>
                 </Grid>
 
-                <Grid Margin="20" Grid.Row="3" Grid.Column="1">
+                <Grid x:Name="grid5" Margin="20" Grid.Row="3" Grid.Column="1">
                     <Grid.Effect>
                         <DropShadowEffect BlurRadius="20"/>
                     </Grid.Effect>
@@ -739,7 +792,7 @@
                     <TextBlock x:Name="ImageFiveName"   Foreground="#FF418CD6" FontSize="15" FontWeight="Bold" Margin="5 5" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0"/>
                 </Grid>
 
-                <Grid Margin="20" Grid.Row="3" Grid.Column="2">
+                <Grid x:Name="grid6" Margin="20" Grid.Row="3" Grid.Column="2">
                     <Grid.Effect>
                         <DropShadowEffect BlurRadius="20"/>
                     </Grid.Effect>

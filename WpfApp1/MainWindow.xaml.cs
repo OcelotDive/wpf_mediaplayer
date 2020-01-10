@@ -543,15 +543,27 @@ namespace WpfApp1
             }
         }
 
-        private void handleThemeChange(object sender, MouseButtonEventArgs e)
+      
+
+        private void handleCacheEmpty(object sender, MouseButtonEventArgs e)
         {
-            BrushConverter bc = new BrushConverter();
-            InfoGrid.Background = (Brush)bc.ConvertFrom("#FF440505");
-           
-            MenuPanel.Background = (Brush)bc.ConvertFrom("#FF440505");
-            grid1.Background = (Brush)bc.ConvertFrom("#FF440505");
-            recentPlayGrid.Background = Brushes.Black;
-            cornerImage.Background = (Brush)bc.ConvertFrom("#FFFFF6F6");
+            var previousFilePath = DirectoryCreator.PreviouslFilePath;
+            var previousImagePath = DirectoryCreator.PreviousImagePath;
+            DirectoryInfo fileInfo = new DirectoryInfo(previousFilePath);
+            DirectoryInfo imageInfo = new DirectoryInfo(previousImagePath);
+            
+            foreach(var file in fileInfo.GetFiles())
+            {
+                file.Delete();
+            
+            }
+            foreach (var image in imageInfo.GetFiles())
+            {
+                image.Delete();
+               
+            }
+
+            AddImagesToView(DirectoryCreator.PreviousImagePath);
 
         }
     }
