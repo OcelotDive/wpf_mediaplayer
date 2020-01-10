@@ -359,6 +359,7 @@ namespace WpfApp1
         private void HandleMinimize(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow.WindowState = WindowState.Minimized;
+            PauseButton_Click(sender, e);
         }
 
         private void HandleControlMouseEnter(object sender, MouseEventArgs e)
@@ -578,6 +579,6 @@ namespace WpfApp1
 
         }
 
-     
+   
     }
 }

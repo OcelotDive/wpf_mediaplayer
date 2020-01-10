@@ -800,7 +800,7 @@
             </Grid>
         </Grid>
         <StackPanel x:Name="WindowControls" Orientation="Horizontal" VerticalAlignment="Top" Height="55" HorizontalAlignment="Right" Margin="0,0,10,0" Width="151">
-            <Button x:Name="MinimizeButton" Width="50" Height="50" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Click="HandleMinimize">
+            <Button x:Name="MinimizeButton" Width="50" Height="50" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Click="HandleMinimize" PreviewMouseLeftButtonDown="PauseButton_Click">
                 <materialDesign:PackIcon Kind="WindowMinimize" Width="40" Height="40" Opacity="0.5">
                     <materialDesign:PackIcon.Background>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
